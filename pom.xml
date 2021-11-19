@@ -19,14 +19,23 @@
 
     <modules>
         <module>reid-smart-system</module>
+        <module>reid-smart-base</module>
     </modules>
 
     <properties>
         <reid-smart.version>0.0.1-SNAPSHOT</reid-smart.version>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
+        <!-- 工具类库 -->
         <hutool.version>5.7.16</hutool.version>
+        <!-- 数据库驱动 -->
+        <postgresql.version>42.3.1</postgresql.version>
+        <ojdbc6.version>11.2.0.3</ojdbc6.version>
+        <sqljdbc4.version>4.0</sqljdbc4.version>
+        <mysql-connector-java.version>8.0.27</mysql-connector-java.version>
+        <!-- 动态数据源 -->
+        <dynamic-datasource-spring-boot-starter.version>3.4.1</dynamic-datasource-spring-boot-starter.version>
+        <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
     </properties>
 
     <dependencies>
@@ -52,6 +61,17 @@
         </dependency>
 
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- reid-smart-base 基础公共模块 -->
+            <dependency>
+                <groupId>org.reid.smart.base</groupId>
+                <artifactId>reid-smart-base</artifactId>
+                <version>${reid-smart.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

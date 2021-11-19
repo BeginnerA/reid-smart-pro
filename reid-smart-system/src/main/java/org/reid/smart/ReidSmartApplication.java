@@ -1,4 +1,4 @@
-package org.reid.smart.system;
+package org.reid.smart;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -23,10 +23,10 @@ import java.util.Objects;
  **/
 @Slf4j
 @SpringBootApplication
-public class ReidSmartSystemApplication {
+public class ReidSmartApplication {
 
     public static void main(String[] args) throws UnknownHostException {
-        ConfigurableApplicationContext application = SpringApplication.run(ReidSmartSystemApplication.class, args);
+        ConfigurableApplicationContext application = SpringApplication.run(ReidSmartApplication.class, args);
         Environment env = application.getEnvironment();
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
