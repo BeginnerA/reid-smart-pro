@@ -56,7 +56,7 @@ class ExcelToolsTest {
     @Test
     void createHead() {
         // 通过工具类创建writer
-        ExcelWriter writer = ExcelUtil.getWriter("d:/test/temporary/自动生成数据表头.xlsx");
+        ExcelWriter writer = ExcelUtil.getWriter("d:/test/temporary/自动生成复杂数据表头.xlsx");
 
         // 自定义单元格样式
         CellStyle cellStyle = writer.getWorkbook().createCellStyle();
@@ -74,28 +74,57 @@ class ExcelToolsTest {
 
         // 构建导出表头
         List<ExcelHeadTreeNode<String>> nodeList = CollUtil.newArrayList();
-        nodeList.add(new ExcelHeadTreeNode<>("1", "0", "土壤", 0, cellStyle));
+        nodeList.add(new ExcelHeadTreeNode<>("1", "0", "工资表", 0, cellStyle));
 
-        nodeList.add(new ExcelHeadTreeNode<>("11", "1", "无污染", 1));
-        nodeList.add(new ExcelHeadTreeNode<>("111", "11", "地块数", 1));
-        nodeList.add(new ExcelHeadTreeNode<>("1111", "11", "比例（%）", 2));
+        nodeList.add(new ExcelHeadTreeNode<>("11", "1", "编号", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("12", "1", "姓名", 2));
+        nodeList.add(new ExcelHeadTreeNode<>("13", "1", "部门", 3));
 
-        nodeList.add(new ExcelHeadTreeNode<>("12", "1", "轻微污染", 2));
-        //nodeList.add(new HeadTreeNode<>("112", "12", "地块数", 1));
-        //nodeList.add(new HeadTreeNode<>("1112", "12", "比例（%）", 2));
+        nodeList.add(new ExcelHeadTreeNode<>("14", "1", "应发栏", 4));
 
-        nodeList.add(new ExcelHeadTreeNode<>("13", "1", "轻度污染", 3));
-        nodeList.add(new ExcelHeadTreeNode<>("113", "13", "地块数", 1));
-        nodeList.add(new ExcelHeadTreeNode<>("1113", "13", "比例（%）", 2));
+        nodeList.add(new ExcelHeadTreeNode<>("111", "14", "基本工资", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("1111", "111", "底薪", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("1112", "111", "全勤奖", 2));
+        nodeList.add(new ExcelHeadTreeNode<>("1113", "111", "补助", 3));
+        nodeList.add(new ExcelHeadTreeNode<>("1114", "111", "合计（元）", 4));
 
-        nodeList.add(new ExcelHeadTreeNode<>("14", "1", "中度污染", 4));
-        //nodeList.add(new HeadTreeNode<>("114", "14", "地块数", 1));
-        //nodeList.add(new HeadTreeNode<>("1114", "14", "比例（%）", 2));
+        nodeList.add(new ExcelHeadTreeNode<>("112", "14", "加班栏", 2));
+
+        nodeList.add(new ExcelHeadTreeNode<>("1115", "112", "平时加班", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("11111", "1115", "工时（h）", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("11112", "1115", "金额（元）", 2));
+
+        nodeList.add(new ExcelHeadTreeNode<>("1116", "112", "假日加班", 2));
+        nodeList.add(new ExcelHeadTreeNode<>("11113", "1116", "工时（h）", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("11114", "1116", "金额（元）", 2));
+
+        nodeList.add(new ExcelHeadTreeNode<>("1117", "112", "合计（元）", 3));
+
+        nodeList.add(new ExcelHeadTreeNode<>("113", "14", "应发合计（元）", 3));
+
+        nodeList.add(new ExcelHeadTreeNode<>("15", "1", "扣款栏", 5));
+
+        nodeList.add(new ExcelHeadTreeNode<>("114", "15", "请假栏", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("1118", "114", "天数", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("1119", "114", "扣款（元）", 2));
+
+        nodeList.add(new ExcelHeadTreeNode<>("115", "15", "迟到栏", 2));
+        nodeList.add(new ExcelHeadTreeNode<>("1119-0", "115", "迟到（次）", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("1119-1", "115", "扣款（元）", 2));
+
+        nodeList.add(new ExcelHeadTreeNode<>("116", "15", "其它扣款（元）", 3));
+        nodeList.add(new ExcelHeadTreeNode<>("117", "15", "全勤奖（元）", 4));
+        nodeList.add(new ExcelHeadTreeNode<>("118", "15", "合计（元）", 5));
+
+        nodeList.add(new ExcelHeadTreeNode<>("16", "1", "实发工资", 6));
+        nodeList.add(new ExcelHeadTreeNode<>("17", "1", "签字", 7));
 
         List<Tree<String>> trees = ExcelTools.buildExcelHeadData(nodeList, "0");
         int i = TreeTools.sameLevelMaxDepth(trees);
         ExcelTools.createHead(writer, trees, i, 0);
         writer.setCurrentRow(i);
+        // hutool 自适应无效
+        ExcelTools.setSizeColumn(writer);
         // 关闭writer，释放内存
         writer.close();
     }

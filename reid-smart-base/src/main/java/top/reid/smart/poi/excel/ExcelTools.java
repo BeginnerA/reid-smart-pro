@@ -46,7 +46,7 @@ public class ExcelTools extends ExcelUtil {
     }
 
     /**
-     * 获得带数据表头的{@link ExcelWriter}，默认写出到第一个sheet
+     * 获得带数据表头的{@link ExcelWriter}，默认写出到第一个 sheet
      * @param treeList 表头数据
      * @param destFilePath 目标文件路径
      * @param <T> T 数据源里的对象类型
@@ -62,7 +62,7 @@ public class ExcelTools extends ExcelUtil {
     }
 
     /**
-     * 获得带数据表头并且表头有空格对角线的{@link ExcelWriter}，默认写出到第一个sheet
+     * 获得带数据表头并且表头有空格对角线的{@link ExcelWriter}，默认写出到第一个 sheet
      * @param treeList 表头数据
      * @param destFilePath 目标文件路径
      * @param endCol – 表头空格对角线结束列（基于 0）
@@ -119,7 +119,7 @@ public class ExcelTools extends ExcelUtil {
     }
 
     /**
-     * 创建 Excel 写入数据表头
+     * 创建 Excel 写入数据表头<br>
      * 创建完成后需要使用{@link ExcelWriter} 下的 setCurrentRow() 方法设置当前所在行
      * @param writer Excel 写入器
      * @param treeList Excel 表头数据
@@ -130,22 +130,16 @@ public class ExcelTools extends ExcelUtil {
     public static <T> void createHead(ExcelWriter writer, List<Tree<T>> treeList, int maxDepth, int passCol) {
         if (CollUtil.isNotEmpty(treeList)) {
             for (Tree<T> node : treeList) {
-                // TODO 表头数据过于复杂时计算单元格不正确
                 // firstRow – 起始行，0开始
                 int firstRow = writer.getCurrentRow();
                 // lastRow – 结束行，0开始
                 int lastRow = firstRow;
                 // 当前节点深度，等于1说明没有叶子节点
-                if (TreeTools.maxDepth(node) == 1) {
+                if (TreeTools.maxDepth(node) == 1 && firstRow < maxDepth) {
                     // 计算行合并，有可能该叶子节点不是最深节点
                     List<CharSequence> parentsName = node.getParentsName(false);
-                    // 不知道为什么会有空元素
-                    parentsName.removeAll(Collections.singleton(null));
-                    lastRow = maxDepth - (parentsName.size() == 0 ? 1 : parentsName.size());
-                    if (lastRow < firstRow) {
-                        // 当前节点为最大深度
-                        lastRow = firstRow;
-                    }
+                    // 以最大深度为结束行
+                    lastRow = (maxDepth - (parentsName.size() == 0 ? 1 : parentsName.size())) + firstRow;
                 }
 
                 // firstColumn – 起始列，0开始]
@@ -158,7 +152,7 @@ public class ExcelTools extends ExcelUtil {
                 // content – 合并单元格后的内容
                 // 单元格样式
                 CellStyle cellStyle = (CellStyle) node.get("cellStyle");
-                if (lastColumn >= firstColumn) {
+                if (lastRow > firstRow || lastColumn > firstColumn) {
                     if (cellStyle == null) {
                         writer.merge(firstRow, lastRow, firstColumn, lastColumn, node.getName(), true);
                     }else {
@@ -187,7 +181,8 @@ public class ExcelTools extends ExcelUtil {
     }
 
     /**
-     * 写出数据，并且合并指定列相同数据行。本方法只是将数据写入 Workbook 中的 Sheet，并不写出到文件
+     * 写出数据，并且合并指定列相同数据行<br>
+     * 本方法只是将数据写入 Workbook 中的 Sheet，并不写出到文件<br>
      *
      * data 中元素支持的类型有：
      * <pre>
