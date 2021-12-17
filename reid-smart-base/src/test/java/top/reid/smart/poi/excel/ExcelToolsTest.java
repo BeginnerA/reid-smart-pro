@@ -54,15 +54,61 @@ class ExcelToolsTest {
     }
 
     @Test
-    void writeSecHeadRow() {
-    }
-
-    @Test
     void createHead() {
+        // 通过工具类创建writer
+        ExcelWriter writer = ExcelUtil.getWriter("d:/test/temporary/自动生成数据表头.xlsx");
+
+        // 自定义单元格样式
+        CellStyle cellStyle = writer.getWorkbook().createCellStyle();
+        cellStyle.setWrapText(false);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        //设置标题内容字体
+        Font font = writer.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 15);
+        font.setFontName("Arial");
+        //设置边框样式
+        StyleUtil.setBorder(cellStyle, BorderStyle.THICK, IndexedColors.RED);
+        cellStyle.setFont(font);
+
+        // 构建导出表头
+        List<ExcelHeadTreeNode<String>> nodeList = CollUtil.newArrayList();
+        nodeList.add(new ExcelHeadTreeNode<>("1", "0", "土壤", 0, cellStyle));
+
+        nodeList.add(new ExcelHeadTreeNode<>("11", "1", "无污染", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("111", "11", "地块数", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("1111", "11", "比例（%）", 2));
+
+        nodeList.add(new ExcelHeadTreeNode<>("12", "1", "轻微污染", 2));
+        //nodeList.add(new HeadTreeNode<>("112", "12", "地块数", 1));
+        //nodeList.add(new HeadTreeNode<>("1112", "12", "比例（%）", 2));
+
+        nodeList.add(new ExcelHeadTreeNode<>("13", "1", "轻度污染", 3));
+        nodeList.add(new ExcelHeadTreeNode<>("113", "13", "地块数", 1));
+        nodeList.add(new ExcelHeadTreeNode<>("1113", "13", "比例（%）", 2));
+
+        nodeList.add(new ExcelHeadTreeNode<>("14", "1", "中度污染", 4));
+        //nodeList.add(new HeadTreeNode<>("114", "14", "地块数", 1));
+        //nodeList.add(new HeadTreeNode<>("1114", "14", "比例（%）", 2));
+
+        List<Tree<String>> trees = ExcelTools.buildExcelHeadData(nodeList, "0");
+        int i = TreeTools.sameLevelMaxDepth(trees);
+        ExcelTools.createHead(writer, trees, i, 0);
+        writer.setCurrentRow(i);
+        // 关闭writer，释放内存
+        writer.close();
     }
 
     @Test
     void setSizeColumn() {
+        // 通过工具类创建writer
+        ExcelWriter writer = ExcelUtil.getWriter("d:/test/temporary/单元格自适应.xlsx");
+        writer.merge(1, "来啦老弟！来啦老弟！来啦老弟！来啦老弟！来啦老弟！来啦老弟！来啦老弟！来啦老弟！");
+        // hutool 自适应无效
+        ExcelTools.setSizeColumn(writer);
+        // 关闭writer，释放内存
+        writer.close();
     }
 
     @Test
