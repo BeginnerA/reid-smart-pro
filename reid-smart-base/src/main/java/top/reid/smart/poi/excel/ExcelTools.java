@@ -1,20 +1,25 @@
 package top.reid.smart.poi.excel;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import cn.hutool.poi.excel.style.StyleUtil;
+import org.apache.poi.common.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFSimpleShape;
 import top.reid.smart.lang.tree.TreeTools;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -115,6 +120,7 @@ public class ExcelTools extends ExcelUtil {
 
     /**
      * 创建 Excel 写入数据表头
+     * 创建完成后需要使用{@link ExcelWriter} 下的 setCurrentRow() 方法设置当前所在行
      * @param writer Excel 写入器
      * @param treeList Excel 表头数据
      * @param maxDepth Excel 数据表头结束行，0开始
@@ -124,6 +130,7 @@ public class ExcelTools extends ExcelUtil {
     public static <T> void createHead(ExcelWriter writer, List<Tree<T>> treeList, int maxDepth, int passCol) {
         if (CollUtil.isNotEmpty(treeList)) {
             for (Tree<T> node : treeList) {
+                // TODO 表头数据过于复杂时计算单元格不正确
                 // firstRow – 起始行，0开始
                 int firstRow = writer.getCurrentRow();
                 // lastRow – 结束行，0开始
@@ -177,6 +184,91 @@ public class ExcelTools extends ExcelUtil {
             writer.setCurrentRow(writer.getCurrentRow() - 1);
 
         }
+    }
+
+    /**
+     * 写出数据，并且合并指定列相同数据行。本方法只是将数据写入 Workbook 中的 Sheet，并不写出到文件
+     *
+     * data 中元素支持的类型有：
+     * <pre>
+     * 1. Iterable，即元素为一个集合，元素被当作一行，data 表示多行
+     * 2. Map，即元素为一个 Map，行为 Map 的 values，data 表示多行
+     * 3. Bean，即元素为一个 Bean，行为 Bean 的字段值列表，data 表示多行
+     * 4. 其它类型，按照基本类型输出（例如字符串）
+     * </pre>
+     *@param writer Excel 写入器
+     * @param data 数据
+     * @param mergeColumn 合并列，只合并相同值行（mergeColumn <= data 最大宽度）
+     */
+    public static void onlyRowMergeWrite(ExcelWriter writer, Iterable<?> data, int mergeColumn) {
+        Map<String, List<Map<String, Object>>> newData = buildRowMergeData(data, Convert.toStr(mergeColumn));
+        if (CollUtil.isNotEmpty(newData)) {
+            newData.forEach((k, v) -> {
+                // 起始行，0开始
+                int firstRow = writer.getCurrentRow();
+                // 结束行，0开始
+                int lastRow = firstRow + v.size() - 1;
+                if (lastRow > firstRow) {
+                    // 合并指定列
+                    writer.merge(firstRow, lastRow, mergeColumn, mergeColumn, null, false);
+                }
+                // 一次性写出内容，使用默认样式，强制输出标题
+                writer.write(v);
+            });
+        }
+    }
+
+    /**
+     * 构建合并指定列数据
+     * @param data 数据
+     * @param groupField 分组字段
+     * @return 重构 data 数据
+     */
+    private static Map<String, List<Map<String, Object>>> buildRowMergeData(Iterable<?> data, String groupField) {
+        Map<String, List<Map<String, Object>>> collect = null;
+        if (CollUtil.isNotEmpty(data)) {
+            List<Map<String, Object>> mapList = new ArrayList<>();
+            for (Object rowBean : data) {
+                // TODO 除了 Iterable 类型，其它类型还存在问题
+                if (rowBean instanceof Iterable) {
+                    // 数组
+                    mapList.add(toMap(((List<?>) rowBean).toArray()));
+                } else if (rowBean instanceof Map) {
+                    // Map
+                    mapList.add(toMap(((Map<?, ?>) rowBean).values()));
+                } else if (rowBean instanceof Hyperlink) {
+                    // poi 超链接 Hyperlink 当成一个值
+                    mapList.add(toMap(rowBean));
+                } else if (BeanUtil.isBean(rowBean.getClass())) {
+                    // Bean 数据
+                    mapList.add(toMap(BeanUtil.beanToMap(rowBean, new TreeMap<>(), false, false).values()));
+                } else {
+                    // 其它转为字符串默认输出
+                    System.out.println(rowBean);
+                }
+            }
+            collect = mapList.stream().collect(Collectors.groupingBy(m -> Convert.toStr(m.get(groupField))));
+        }
+        return collect;
+    }
+
+    /**
+     * 将 object 对象转成 map
+     * @param values row 值
+     * @return map
+     */
+    @SafeVarargs
+    private static  <T> Map<String, T> toMap(T... values) {
+        Map<String, T> map = null;
+        if (ArrayUtil.isNotEmpty(values)) {
+            map = new LinkedHashMap<>(values.length);
+            int i = 0;
+            for (T value : values) {
+                map.put(Convert.toStr(i), value);
+                i++;
+            }
+        }
+        return map;
     }
 
     /**
