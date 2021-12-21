@@ -6,10 +6,10 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import cn.hutool.poi.excel.StyleSet;
 import cn.hutool.poi.excel.style.StyleUtil;
 import org.apache.poi.common.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.*;
@@ -196,6 +196,10 @@ public class ExcelTools extends ExcelUtil {
      * @param mergeColumn 合并列，只合并相同值行（mergeColumn <= data 最大宽度）
      */
     public static void onlyRowMergeWrite(ExcelWriter writer, Iterable<?> data, int mergeColumn) {
+        StyleSet styleSet = writer.getStyleSet();
+        CellStyle cellStyleForNumber = styleSet.getCellStyleForNumber();
+        // 设置数据格式：0代表常规格式，内置格式在 {@link BuiltinFormats} 中定义
+        cellStyleForNumber.setDataFormat((short) 0);
         Map<String, List<Map<String, Object>>> newData = buildRowMergeData(data, Convert.toStr(mergeColumn));
         if (CollUtil.isNotEmpty(newData)) {
             newData.forEach((k, v) -> {
