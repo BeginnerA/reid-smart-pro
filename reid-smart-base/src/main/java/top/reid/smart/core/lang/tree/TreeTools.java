@@ -1,4 +1,4 @@
-package top.reid.smart.lang.tree;
+package top.reid.smart.core.lang.tree;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.tree.Tree;

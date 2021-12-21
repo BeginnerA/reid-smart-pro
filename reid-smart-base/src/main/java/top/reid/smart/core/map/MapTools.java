@@ -164,10 +164,10 @@ public class MapTools extends MapUtil {
     }
 
     /**
-     * 获取map中第一个非空数据值
+     * 获取 map 中第一个非空数据值
      *
-     * @param <K> Key的类型
-     * @param <V> Value的类型
+     * @param <K> Key 的类型
+     * @param <V> Value 的类型
      * @param map 数据源
      * @return 返回的值
      */
@@ -218,7 +218,7 @@ public class MapTools extends MapUtil {
     /**
      * mapList 转 Map
      * @param mapList mapList
-     * @param keyField Map Key字段
+     * @param keyField Map Key 字段
      * @param valueField Map value字段
      * @param <K> key
      * @param <V> value
@@ -235,7 +235,7 @@ public class MapTools extends MapUtil {
      * @return 新的有排名字段的 mapList
      */
     public static List<Map<String, Object>> rank(List<Map<String, Object>> mapList, String rankField) {
-        List<Map.Entry<Double, List<Map<String, Object>>>> entries = mapList.stream().collect(Collectors.groupingBy(m -> Convert.toDouble(m.get(rankField)))).entrySet().stream().sorted((s1, s2) -> -Double.compare(s1.getKey(), s2.getKey())).collect(Collectors.toList());
+        List<Map.Entry<Double, List<Map<String, Object>>>> entries = mapList.stream().collect(Collectors.groupingBy(m -> Convert.toDouble(m.get(rankField)))).entrySet().stream().sorted((s1, s2) -> -Double.compare(s1.getKey(), s2.getKey())).toList();
         // 设置排名
         int rank = 1;
         // 设置排序号
