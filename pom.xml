@@ -27,9 +27,11 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 工具类库 -->
-        <hutool.version>5.7.16</hutool.version>
+        <hutool.version>5.7.17</hutool.version>
         <!-- POI -->
         <poi.version>5.1.0</poi.version>
+        <!-- wkt 转 Geo json -->
+        <geojson.version>24.2-oss84-1</geojson.version>
         <!-- 数据库驱动 -->
         <postgresql.version>42.3.1</postgresql.version>
         <ojdbc6.version>11.2.0.3</ojdbc6.version>

@@ -19,6 +19,7 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
+        <!-- poi -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -28,6 +29,12 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${poi.version}</version>
+        </dependency>
+        <!-- wkt 转 Geo json -->
+        <dependency>
+            <groupId>io.oss84.geotools</groupId>
+            <artifactId>gt-geojson</artifactId>
+            <version>${geojson.version}</version>
         </dependency>
 
         <!-- mybatis-plus -->
