@@ -80,6 +80,13 @@
             <version>${postgresql.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- Access 驱动 -->
+        <dependency>
+            <groupId>net.sf.ucanaccess</groupId>
+            <artifactId>ucanaccess</artifactId>
+            <version>${UCanAccess.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

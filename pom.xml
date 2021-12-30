@@ -27,7 +27,7 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 工具类库 -->
-        <hutool.version>5.7.17</hutool.version>
+        <hutool.version>5.7.18</hutool.version>
         <!-- POI -->
         <poi.version>5.1.0</poi.version>
         <!-- wkt 转 Geo json -->
@@ -37,6 +37,7 @@
         <ojdbc6.version>11.2.0.3</ojdbc6.version>
         <sqljdbc4.version>4.0</sqljdbc4.version>
         <mysql-connector-java.version>8.0.27</mysql-connector-java.version>
+        <UCanAccess.version>5.0.1</UCanAccess.version>
         <!-- 动态数据源 -->
         <dynamic-datasource-spring-boot-starter.version>3.5.0</dynamic-datasource-spring-boot-starter.version>
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
