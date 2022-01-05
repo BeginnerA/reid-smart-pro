@@ -38,7 +38,11 @@ public class FileTree {
      */
     private String absolutePath;
     /**
-     * 子文件
+     * 是否是文件（文件：true；文件夹：false）
+     */
+    private boolean isFile;
+    /**
+     * 子文件树列表
      */
     private List<FileTree> fileTrees = new ArrayList<>();
 
@@ -90,8 +94,16 @@ public class FileTree {
         this.fileTrees = fileTrees;
     }
 
+    public boolean isFile() {
+        return isFile;
+    }
+
+    public void isFile(boolean file) {
+        isFile = file;
+    }
+
     /**
-     * 获取下级文件夹以及文件名称列表
+     * 获取下一级文件夹以及文件名称列表
      * @return 文件夹以及文件名称列表
      */
     public List<String> getChildAllNames() {
@@ -99,7 +111,7 @@ public class FileTree {
     }
 
     /**
-     * 获取下级文件夹以及文件列表
+     * 获取下一级文件夹以及文件列表
      * @return 文件夹以及文件列表
      */
     public List<File> getChildAllFiles() {
@@ -107,34 +119,34 @@ public class FileTree {
     }
 
     /**
-     * 获取下级文件夹名称列表
+     * 获取下一级文件夹名称列表
      * @return 文件夹名称列表
      */
     public List<String> getChildFolderNames() {
-        return this.fileTrees.stream().filter(fileTree -> fileTree.getExtName() == null).map(FileTree::getFileName).collect(Collectors.toList());
+        return this.fileTrees.stream().filter(fileTree -> !fileTree.isFile()).map(FileTree::getFileName).collect(Collectors.toList());
     }
 
     /**
-     * 获取下级文件夹文件列表
+     * 获取下一级文件夹文件列表
      * @return 文件夹文件列表
      */
     public List<File> getChildFolderFiles() {
-        return this.fileTrees.stream().filter(fileTree -> fileTree.getExtName() == null).map(FileTree::getFile).collect(Collectors.toList());
+        return this.fileTrees.stream().filter(fileTree -> !fileTree.isFile()).map(FileTree::getFile).collect(Collectors.toList());
     }
 
     /**
-     * 获取下级文件名称列表
+     * 获取下一级文件名称列表
      * @return 文件名称列表
      */
     public List<String> getChildFileNames() {
-        return this.fileTrees.stream().filter(fileTree -> fileTree.getExtName() != null).map(FileTree::getFileName).collect(Collectors.toList());
+        return this.fileTrees.stream().filter(FileTree::isFile).map(FileTree::getFileName).collect(Collectors.toList());
     }
 
     /**
-     * 获取下级文件列表
+     * 获取下一级文件列表
      * @return 文件列表
      */
     public List<File> getChildFiles() {
-        return this.fileTrees.stream().filter(fileTree -> fileTree.getExtName() != null).map(FileTree::getFile).collect(Collectors.toList());
+        return this.fileTrees.stream().filter(FileTree::isFile).map(FileTree::getFile).collect(Collectors.toList());
     }
 }

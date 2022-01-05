@@ -65,6 +65,7 @@ public class FileTools extends FileUtil {
             fileTree.setFileSize(size(file));
             fileTree.setExtName(extName(file));
             fileTree.setAbsolutePath(getAbsolutePath(file));
+            fileTree.isFile(isFile(file));
             String path = file.getPath();
             if (isDirectory(path)) {
                 final File[] files = ls(path);
