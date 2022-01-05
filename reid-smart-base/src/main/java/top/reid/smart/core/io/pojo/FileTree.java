@@ -1,0 +1,140 @@
+package top.reid.smart.core.io.pojo;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * <p>
+ * 文件树
+ * </p>
+ *
+ * @Author REID
+ * @Blog https://blog.csdn.net/qq_39035773
+ * @GitHub https://github.com/BeginnerA
+ * @Data 2022/1/5
+ * @Version V1.0
+ **/
+public class FileTree {
+    /**
+     * 文件
+     */
+    private File file;
+    /**
+     * 文件或目录名称
+     */
+    private String fileName;
+    /**
+     * 文件或目录总大小
+     */
+    private long fileSize;
+    /**
+     * 扩展名（如果是文件夹没有扩展名）
+     */
+    private String extName;
+    /**
+     * 文件绝对路径
+     */
+    private String absolutePath;
+    /**
+     * 子文件
+     */
+    private List<FileTree> fileTrees = new ArrayList<>();
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public String getExtName() {
+        return extName;
+    }
+
+    public void setExtName(String extName) {
+        this.extName = extName;
+    }
+
+    public String getAbsolutePath() {
+        return absolutePath;
+    }
+
+    public void setAbsolutePath(String absolutePath) {
+        this.absolutePath = absolutePath;
+    }
+
+    public List<FileTree> getFileTrees() {
+        return fileTrees;
+    }
+
+    public void setFileTrees(List<FileTree> fileTrees) {
+        this.fileTrees = fileTrees;
+    }
+
+    /**
+     * 获取下级文件夹以及文件名称列表
+     * @return 文件夹以及文件名称列表
+     */
+    public List<String> getChildAllNames() {
+        return this.fileTrees.stream().map(FileTree::getFileName).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取下级文件夹以及文件列表
+     * @return 文件夹以及文件列表
+     */
+    public List<File> getChildAllFiles() {
+        return this.fileTrees.stream().map(FileTree::getFile).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取下级文件夹名称列表
+     * @return 文件夹名称列表
+     */
+    public List<String> getChildFolderNames() {
+        return this.fileTrees.stream().filter(fileTree -> fileTree.getExtName() == null).map(FileTree::getFileName).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取下级文件夹文件列表
+     * @return 文件夹文件列表
+     */
+    public List<File> getChildFolderFiles() {
+        return this.fileTrees.stream().filter(fileTree -> fileTree.getExtName() == null).map(FileTree::getFile).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取下级文件名称列表
+     * @return 文件名称列表
+     */
+    public List<String> getChildFileNames() {
+        return this.fileTrees.stream().filter(fileTree -> fileTree.getExtName() != null).map(FileTree::getFileName).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取下级文件列表
+     * @return 文件列表
+     */
+    public List<File> getChildFiles() {
+        return this.fileTrees.stream().filter(fileTree -> fileTree.getExtName() != null).map(FileTree::getFile).collect(Collectors.toList());
+    }
+}
