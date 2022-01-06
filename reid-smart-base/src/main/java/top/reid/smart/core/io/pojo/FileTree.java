@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 文件树
+ * 文件结构树
  * </p>
  *
  * @Author REID

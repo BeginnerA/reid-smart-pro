@@ -28,4 +28,11 @@ class FileToolsTest {
         System.out.println("下级指定文件名称文件：" + fileTree.getChildFile("test111.shp"));
     }
 
+    @Test
+    void contentEquals() {
+        String path1 = "E:\\test";
+        String path2 = "E:\\test1";
+        System.out.println("检查文件结构：" + FileTools.contentEquals(FileTools.getFileTree(path1), FileTools.getFileTree(path2), false));
+        System.out.println("检查文件结构和内容：" + FileTools.contentEquals(FileTools.getFileTree(path1), FileTools.getFileTree(path2), true));
+    }
 }
