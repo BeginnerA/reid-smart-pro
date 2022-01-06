@@ -25,7 +25,7 @@ class FileToolsTest {
         System.out.println("下级文件夹列表：" + fileTree.getChildFolderFiles());
         System.out.println("下级文件列表：" + fileTree.getChildFiles());
         System.out.println("下级指定后缀文件列表：" + fileTree.getChildFiles("shp"));
-        System.out.println("下级指定文件名称文件：" + fileTree.getChildFile("D1_530112_E_2020_GJGHKQ.shp1"));
+        System.out.println("下级指定文件名称文件：" + fileTree.getChildFile("test111.shp"));
     }
 
 }
