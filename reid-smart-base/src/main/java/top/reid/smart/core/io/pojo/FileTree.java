@@ -103,7 +103,7 @@ public class FileTree {
     }
 
     /**
-     * 获取下一级文件夹以及文件名称列表
+     * 获取当前目录下一级文件夹以及文件名称列表
      * @return 文件夹以及文件名称列表
      */
     public List<String> getChildAllNames() {
@@ -111,7 +111,7 @@ public class FileTree {
     }
 
     /**
-     * 获取下一级文件夹以及文件列表
+     * 获取当前目录下一级文件夹以及文件列表
      * @return 文件夹以及文件列表
      */
     public List<File> getChildAllFiles() {
@@ -119,7 +119,7 @@ public class FileTree {
     }
 
     /**
-     * 获取下一级文件夹名称列表
+     * 获取当前目录下一级文件夹名称列表
      * @return 文件夹名称列表
      */
     public List<String> getChildFolderNames() {
@@ -127,7 +127,7 @@ public class FileTree {
     }
 
     /**
-     * 获取下一级文件夹文件列表
+     * 获取当前目录下一级文件夹文件列表
      * @return 文件夹文件列表
      */
     public List<File> getChildFolderFiles() {
@@ -135,7 +135,7 @@ public class FileTree {
     }
 
     /**
-     * 获取下一级文件名称列表
+     * 获取当前目录下一级文件名称列表
      * @return 文件名称列表
      */
     public List<String> getChildFileNames() {
@@ -143,10 +143,44 @@ public class FileTree {
     }
 
     /**
-     * 获取下一级文件列表
+     * 获取当前目录下一级指定扩展名文件名称列表
+     * @param extName 扩展名（文件后缀）
+     * @return 文件名称列表
+     */
+    public List<String> getChildFileNames(String extName) {
+        return this.fileTrees.stream().filter(fileTree -> {
+            return fileTree.isFile && fileTree.getExtName().equals(extName);
+        }).map(FileTree::getFileName).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取当前目录下一级文件列表
      * @return 文件列表
      */
     public List<File> getChildFiles() {
         return this.fileTrees.stream().filter(FileTree::isFile).map(FileTree::getFile).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取当前目录下一级指定扩展名文件列表
+     * @param extName 扩展名（文件后缀）
+     * @return 文件列表
+     */
+    public List<File> getChildFiles(String extName) {
+        return this.fileTrees.stream().filter(fileTree -> {
+            return fileTree.isFile && fileTree.getExtName().equals(extName);
+        }).map(FileTree::getFile).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取当前目录下一级指定文件完整名称文件
+     * @param fileName 文件完整名称
+     * @return 文件
+     */
+    public File getChildFile(String fileName) {
+        List<File> files = this.fileTrees.stream().filter(fileTree -> {
+            return fileTree.isFile && fileTree.getFileName().equals(fileName);
+        }).map(FileTree::getFile).toList();
+        return files.size() == 0 ? null : files.get(0);
     }
 }
