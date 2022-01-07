@@ -119,11 +119,18 @@ public class FileTools extends FileUtil {
         if (fileTree1 != null && fileTree2 != null) {
             mark = StrTools.equals(fileTree1.getFileName(), fileTree2.getFileName());
             if (checkFileContent && fileTree1.isFile() && fileTree2.isFile()) {
-                mark = contentEquals(fileTree1.getFile(), fileTree2.getFile());
+                mark = fileTree1.getFileSize() == fileTree2.getFileSize();
+                if (mark) {
+                    mark = contentEquals(fileTree1.getFile(), fileTree2.getFile());
+                }
             }
-            List<FileTree> childFileTree1 = fileTree1.getFileTrees();
-            List<FileTree> childFileTree2 = fileTree2.getFileTrees();
-            if (mark && childFileTree1.size() == childFileTree2.size()) {
+
+            if (mark) {
+                List<FileTree> childFileTree1 = fileTree1.getFileTrees();
+                List<FileTree> childFileTree2 = fileTree2.getFileTrees();
+                if (childFileTree1.size() != childFileTree2.size()) {
+                    return false;
+                }
                 int i = 0;
                 for (FileTree fileTree : childFileTree1) {
                     mark = contentEquals(fileTree, childFileTree2.get(i), checkFileContent);
@@ -132,8 +139,6 @@ public class FileTools extends FileUtil {
                     }
                     i++;
                 }
-            }else {
-                mark = false;
             }
         }
         return mark;
