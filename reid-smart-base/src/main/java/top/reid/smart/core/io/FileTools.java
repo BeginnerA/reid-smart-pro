@@ -22,7 +22,9 @@ import java.util.List;
 public class FileTools extends FileUtil {
 
     /**
-     * 获取指定目录下文件结构树，包含指定目录下所有文件夹和文件
+     * 获取指定目录下文件结构树，包含指定目录下所有文件夹和文件<br>
+     * 返回内容包含文件本身 {@link File}<br>
+     * 如果只需要文件结构直接使用 {@link #getFileTree(File, boolean)} 方法
      * @param path 文件路径
      * @return 文件结构树列表
      */
@@ -31,7 +33,9 @@ public class FileTools extends FileUtil {
     }
 
     /**
-     * 获取指定目录下文件结构树，包含指定目录下所有文件夹和文件
+     * 获取指定目录下文件结构树，包含指定目录下所有文件夹和文件<br>
+     * 返回内容包含文件本身 {@link File}<br>
+     * 如果只需要文件结构直接使用 {@link #getFileTree(File, boolean)} 方法
      * @param file 当前文件
      * @return 文件结构树列表
      */
@@ -39,29 +43,34 @@ public class FileTools extends FileUtil {
         List<FileTree> fileTrees = new ArrayList<>();
         final File[] files = ls(file.getPath());
         for (File f : files) {
-            fileTrees.add(getFileTree(f));
+            fileTrees.add(getFileTree(f, true));
         }
         return fileTrees;
     }
 
     /**
-     * 获取文件结构树，包含当前文件夹以及子目录中的所有文件夹和文件，返回{@link FileTree}
+     * 获取文件结构树，包含当前文件夹以及子目录中的所有文件夹和文件，返回 {@link FileTree}<br>
+     * 返回内容包含文件本身 {@link File}<br>
+     * 如果只需要文件结构直接使用 {@link #getFileTree(File, boolean)} 方法
      * @param path 当前文件路径
      * @return 文件结构树列表
      */
     public static FileTree getFileTree(String path) {
-        return getFileTree(file(path));
+        return getFileTree(file(path), true);
     }
 
     /**
-     * 获取文件结构树，包含当前文件夹以及子目录中的所有文件夹和文件，返回{@link FileTree}
+     * 获取文件结构树，包含当前文件夹以及子目录中的所有文件夹和文件信息，返回 {@link FileTree}
      * @param file 当前文件
+     * @param includeFiles 是否包含文件本身 {@link File}
      * @return 文件结构树列表
      */
-    public static FileTree getFileTree(File file) {
+    public static FileTree getFileTree(File file, boolean includeFiles) {
         FileTree fileTree = new FileTree();
         if (file != null) {
-            fileTree.setFile(file);
+            if (includeFiles) {
+                fileTree.setFile(file);
+            }
             fileTree.setFileName(file.getName());
             fileTree.setFileSize(size(file));
             fileTree.setExtName(extName(file));
@@ -71,7 +80,7 @@ public class FileTools extends FileUtil {
             if (isDirectory(path)) {
                 final File[] files = ls(path);
                 for (File f : files) {
-                    fileTree.getFileTrees().add(getFileTree(f));
+                    fileTree.getFileTrees().add(getFileTree(f, includeFiles));
                 }
             }
         }
@@ -83,7 +92,7 @@ public class FileTools extends FileUtil {
      * 比较两个文件结构是否相同<br>
      * 比较两个文件结构名称和数量相同<br>
      * 此方法不检查文件具体内容<br>
-     * 如果也需要检查文件具体内容，直接使用{@link #contentEquals(FileTree, FileTree, boolean)}
+     * 如果也需要检查文件具体内容，直接使用 {@link #contentEquals(FileTree, FileTree, boolean)} 方法
      * @param path1 文件路径1
      * @param path2 文件路径2
      * @return 两个文件结构一致返回 true，否则 false
@@ -96,13 +105,13 @@ public class FileTools extends FileUtil {
      * 比较两个文件结构是否相同<br>
      * 比较两个文件结构名称和数量相同<br>
      * 此方法不检查文件具体内容
-     * 如果也需要检查文件具体内容，直接使用{@link #contentEquals(FileTree, FileTree, boolean)}
+     * 如果也需要检查文件具体内容，直接使用 {@link #contentEquals(FileTree, FileTree, boolean)} 方法
      * @param file1 文件1
      * @param file2 文件2
      * @return 两个文件结构一致返回 true，否则 false
      */
     public static boolean structureEquals(File file1, File file2) {
-        return contentEquals(getFileTree(file1), getFileTree(file2), false);
+        return contentEquals(getFileTree(file1, false), getFileTree(file2, false), false);
     }
 
     /**
@@ -111,7 +120,7 @@ public class FileTools extends FileUtil {
      * 比较两个文件内容是否相同，首先比较长度，长度一致再比较内容<br>
      * @param fileTree1 文件结构树对象1
      * @param fileTree2 文件结构树对象2
-     * @param checkFileContent 是否检查文件内容
+     * @param checkFileContent 是否比较文件内容
      * @return 两个文件结构一致返回 true，否则 false
      */
     public static boolean contentEquals(FileTree fileTree1, FileTree fileTree2, boolean checkFileContent) {
