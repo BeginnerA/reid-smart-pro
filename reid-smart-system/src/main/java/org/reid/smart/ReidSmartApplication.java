@@ -33,8 +33,8 @@ public class ReidSmartApplication {
         String path = Objects.requireNonNull(env.getProperty("server.servlet.context-path")).trim();
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application Reid-Smart-Pro is running! Access URLs:\n\t" +
-                "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
-                "External: \thttps://" + ip + ":" + port + path + "/\n\t" +
+                "Local: \t\thttp://localhost:" + port + path + "/doc.html\n\t" +
+                "External: \thttps://" + ip + ":" + port + path + "/doc.html\n\t" +
                 "Swagger文档: \thttps://" + ip + ":" + port + path + "/doc.html\n" +
                 "----------------------------------------------------------");
     }

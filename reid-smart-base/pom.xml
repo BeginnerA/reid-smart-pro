@@ -13,6 +13,11 @@
     </parent>
 
     <dependencies>
+        <!-- 集成 springmvc 框架并实现自动配置 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <!-- 工具 -->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -35,6 +40,13 @@
             <groupId>io.oss84.geotools</groupId>
             <artifactId>gt-geojson</artifactId>
             <version>${geojson.version}</version>
+        </dependency>
+
+        <!-- Swagger API文档 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
         </dependency>
 
         <!-- mybatis-plus -->
