@@ -41,19 +41,20 @@ public class GeoTools {
     private static final WKTReader READER = new WKTReader();
 
     /**
+     * 要素集合根节点
+     */
+    private static final String[] COLLECTION_TYPE = new String[]{"FeatureCollection"};
+
+    /**
+     * 地理要素类型
+     */
+    private static final String[] FEATURES_TYPE = new String[]{"Feature"};
+
+    /**
      * 地理数据类型
      * 点、线、面、几何集合
      */
     private static final String[] GEO_TYPE = new String[]{"Geometry", "Point", "LineString", "Polygon", "MultiPoint", "MultiLineString", "MultiPolygon", "GeometryCollection"};
-
-    /**
-     * 类型是否是 Geo 类型
-     * @param geoStr Geo 字符串
-     * @return 是、否
-     */
-    public static boolean existGeoType(String geoStr) {
-        return ArrayUtil.containsIgnoreCase(GEO_TYPE, geoStr);
-    }
 
     /**
      * 获取 Geo 几何类型
@@ -127,7 +128,32 @@ public class GeoTools {
      */
     public static boolean isGeoJson(JSONObject geoJson) {
         String type = geoJson.getStr("type");
-        return existGeoType(type);
+        boolean mark = false;
+        // 判断根节点
+        if (ArrayUtil.containsIgnoreCase(COLLECTION_TYPE, type)) {
+            JSONArray jsonArray = geoJson.get("features", JSONArray.class);
+            for (Object jsonStr : jsonArray) {
+                JSONObject jsonObject = JSONUtil.parseObj(jsonStr);
+                type = jsonObject.getStr("type");
+                // 判断地理要素
+                if (ArrayUtil.containsIgnoreCase(FEATURES_TYPE, type)) {
+                    type = jsonObject.get("geometry", JSONObject.class).getStr("type");
+                    // 判断几何要素
+                    mark = ArrayUtil.containsIgnoreCase(GEO_TYPE, type);
+                }
+                if (!mark) {
+                    return false;
+                }
+            }
+        }else {
+            // 判断地理要素
+            if (ArrayUtil.containsIgnoreCase(FEATURES_TYPE, type)) {
+                type = geoJson.get("geometry", JSONObject.class).getStr("type");
+            }
+            // 数据是几何数据
+            mark = ArrayUtil.containsIgnoreCase(GEO_TYPE, type);
+        }
+        return mark;
     }
 
     /**
@@ -149,24 +175,32 @@ public class GeoTools {
         GeometryJSON gJson = new GeometryJSON();
         try {
             if(isGeoJson(geoJson)){
-                // 由于解析上面的 json 语句会出现这个 geometries 属性没有采用以下办法
-                JSONArray geometriesArray = JSONUtil.parseArray(geoJson);
-                // 定义一个数组装图形对象
-                int size = geometriesArray.size();
-                Geometry[] geometries = new Geometry[size];
-                for (int i = 0; i < size; i++){
-                    String str = geometriesArray.get(i).toString();
-                    // 使用 GeoUtil 去读取 str
-                    Reader reader = GeoJSONUtil.toReader(str);
-                    Geometry geometry = gJson.read(reader);
-                    geometries[i] = geometry;
+                String type = geoJson.getStr("type");
+                // 判断是否根节点
+                if (ArrayUtil.containsIgnoreCase(COLLECTION_TYPE, type)) {
+                    JSONArray geometriesArray = geoJson.get("features", JSONArray.class);
+                    // 定义一个数组装图形对象
+                    int size = geometriesArray.size();
+                    Geometry[] geometries = new Geometry[size];
+                    for (int i = 0; i < size; i++){
+                        String str = JSONUtil.parseObj(geometriesArray.get(i)).getStr("geometry");
+                        // 使用 GeoUtil 去读取 str
+                        Reader reader = GeoJSONUtil.toReader(str);
+                        Geometry geometry = gJson.read(reader);
+                        geometries[i] = geometry;
+                    }
+                    GeometryCollection geometryCollection = new GeometryCollection(geometries, new GeometryFactory());
+                    wkt = geometryCollection.toText();
+                }else {
+                    String geoStr = geoJson.toString();
+                    // 判断是否地理要素节点
+                    if (ArrayUtil.containsIgnoreCase(FEATURES_TYPE, type)) {
+                        geoStr = geoJson.getStr("geometry");
+                    }
+                    Reader reader = GeoJSONUtil.toReader(geoStr);
+                    Geometry read = gJson.read(reader);
+                    wkt = read.toText();
                 }
-                GeometryCollection geometryCollection = new GeometryCollection(geometries, new GeometryFactory());
-                wkt = geometryCollection.toText();
-            }else {
-                Reader reader = GeoJSONUtil.toReader(geoJson.toString());
-                Geometry read = gJson.read(reader);
-                wkt = read.toText();
             }
         } catch (IOException e){
             System.out.println("GeoJson 转 WKT 出现异常："+ e);
