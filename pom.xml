@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.3</version>
         <relativePath/>
     </parent>
 
@@ -27,13 +27,19 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 工具类库 -->
-        <hutool.version>5.7.18</hutool.version>
+        <hutool.version>5.7.19</hutool.version>
         <!-- POI -->
         <poi.version>5.1.0</poi.version>
         <!-- wkt 转 Geo json -->
         <geojson.version>24.2-oss84-1</geojson.version>
         <!-- Swagger -->
         <knife4j.version>3.0.3</knife4j.version>
+        <!-- JWT -->
+        <java-jwt.version>3.18.3</java-jwt.version>
+        <!-- shiro -->
+        <shiro.version>1.8.0</shiro.version>
+        <!-- shiro-redis -->
+        <shiro-redis.version>3.3.1</shiro-redis.version>
         <!-- 数据库驱动 -->
         <postgresql.version>42.3.1</postgresql.version>
         <ojdbc6.version>11.2.0.3</ojdbc6.version>
@@ -42,7 +48,8 @@
         <UCanAccess.version>5.0.1</UCanAccess.version>
         <!-- 动态数据源 -->
         <dynamic-datasource-spring-boot-starter.version>3.5.0</dynamic-datasource-spring-boot-starter.version>
-        <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+        <mybatis-plus.version>3.5.0</mybatis-plus.version>
+        <druid.version>1.2.8</druid.version>
     </properties>
 
     <dependencies>
@@ -74,7 +81,7 @@
 
     <build>
         <plugins>
-            <!-- 指定JDK编译版本 -->
+            <!-- 指定 JDK 编译版本 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -92,7 +99,7 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            <!-- 避免font文件的二进制文件格式压缩破坏 -->
+            <!-- 避免 font 文件的二进制文件格式压缩破坏 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

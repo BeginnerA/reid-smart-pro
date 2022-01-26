@@ -7,11 +7,27 @@ spring:
   profiles:
     active: @profile.name@
 
+shiro:
+  loginUrl: /sys/common/login
+  unauthorizedUrl: /sys/common/403
+
 reid:
+  # swagger 配置
   swagger:
-    base-package: org.reid.smart
+    # 需要扫描的包路径
+    basePackage: org.reid.smart
     companyName: 一个无聊的公司
     name: 一个无聊的项目
     version: @project.version@
     description: 一个无聊的项目后台API接口
-
+  # shiro 配置
+  shiro:
+    # 是否启用 shiro
+    enableShiro: true
+    # 不需要拦截的地址
+    excludeUrls: /sys/common/login,/sys/common/test
+  # mybatis、mybatis-plus 配置
+  mybatis:
+    mapperScanner:
+      # 需要扫描 mapper 的位置
+      basePackage: org.reid.smart.modules.**.mapper*
