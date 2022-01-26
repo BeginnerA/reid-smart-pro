@@ -26,6 +26,40 @@ public class MapTools extends MapUtil {
      * 相似度，为了匹配的准确度相似度值最少在0.8以上
      */
     private static final double SIMILARITY = 0.9;
+    /**
+     * 数据长度的2的N次方
+     */
+    private static final double MODULE = 2;
+
+    /**
+     * 获取 Map 初始容量
+     * @param size key 的数量
+     * @return initialCapacity – 初始容量
+     */
+    public static int getCapacityFactor(int size) {
+        int n = size;
+        int power = 0;
+        while (n > 1) {
+            power++;
+            n >>>= 1;
+        }
+        int capacity = (int) Math.pow(MODULE, power);
+        if (capacity < size || capacity % MODULE != 0) {
+            capacity *= MODULE;
+        }
+        return capacity;
+    }
+
+    /**
+     * 初始化 HashMap
+     * @param size 初始化容量
+     * @param <K> K
+     * @param <V> V
+     * @return HashMap
+     */
+    public static <K, V> HashMap<K, V> newHashMap(int size) {
+        return new HashMap<>(getCapacityFactor(size));
+    }
 
     /**
      * map 按 key 升序排序

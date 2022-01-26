@@ -30,7 +30,7 @@ public class DbReadTableUtil {
     private static Statement statement;
 
     /**
-     * 初始化连接信息
+     * 初始化
      */
     private static void init() {
         try {

@@ -1,10 +1,9 @@
-package top.reid.smart.config;
+package top.reid.config;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootVersion;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,19 +45,19 @@ public class Swagger2Config implements WebMvcConfigurer {
     /**
      * 企业名称
      */
-    @Value("${reid.swagger.companyName:}")
+    @Value("${reid.swagger.company-name:}")
     private String companyName;
 
     /**
      * 企业地址
      */
-    @Value("${reid.swagger.companyUrl:}")
+    @Value("${reid.swagger.company-url:}")
     private String companyUrl;
 
     /**
      * 企业邮箱
      */
-    @Value("${reid.swagger.companyEmail:}")
+    @Value("${reid.swagger.company-email:}")
     private String companyEmail;
 
     /**
