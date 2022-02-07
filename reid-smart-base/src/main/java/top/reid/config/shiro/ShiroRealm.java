@@ -10,7 +10,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import top.reid.smart.core.util.CommonCharacter;
-import top.reid.config.shiro.util.JwtUtil;
+import top.reid.config.shiro.util.JwtTools;
 import top.reid.smart.spring.SpringContextTools;
 import top.reid.smart.spring.annotation.CheckBean;
 import top.reid.system.SysCommonApi;
@@ -88,7 +88,7 @@ public class ShiroRealm extends AuthorizingRealm {
         try {
             loginUser = this.checkUserTokenIsEffect((String) token);
         } catch (AuthenticationException e) {
-            JwtUtil.responseError(SpringContextTools.getHttpServletResponse(),401, e.getMessage());
+            JwtTools.responseError(SpringContextTools.getHttpServletResponse(),401, e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -101,7 +101,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     public LoginUser checkUserTokenIsEffect(String token) throws AuthenticationException {
         // 解密获得 username，用于和数据库进行对比
-        String username = JwtUtil.getUsername(token);
+        String username = JwtTools.getUsername(token);
         if (username == null) {
             throw new AuthenticationException("token 非法无效!");
         }

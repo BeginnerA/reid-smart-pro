@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import top.reid.smart.core.util.CommonCharacter;
 import top.reid.smart.core.util.StrTools;
 import top.reid.config.shiro.JwtToken;
-import top.reid.config.shiro.util.JwtUtil;
+import top.reid.config.shiro.util.JwtTools;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -58,7 +58,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             executeLogin(request, response);
             return true;
         } catch (Exception e) {
-            JwtUtil.responseError(response,401, CommonCharacter.TOKEN_IS_INVALID_MSG);
+            JwtTools.responseError(response,401, CommonCharacter.TOKEN_IS_INVALID_MSG);
             return false;
         }
     }

@@ -28,7 +28,7 @@ import java.util.Date;
  * @Data 2022/1/19
  * @Version V1.0
  **/
-public class JwtUtil {
+public class JwtTools {
 
     /**
      * Token 过期时间30分钟（用户登录过期时间是此时间的两倍，以 token 在 reids 缓存时间为准）
