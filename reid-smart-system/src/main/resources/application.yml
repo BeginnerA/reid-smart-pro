@@ -14,8 +14,9 @@ shiro:
 reid:
   # swagger 配置
   swagger:
-    # 需要扫描的包路径
+    # 需要扫描的包路径（默认扫描 com 下全部）
     basePackage: org.reid.smart
+    # 以下非必须配置
     companyName: 一个无聊的公司
     name: 一个无聊的项目
     version: @project.version@
@@ -24,10 +25,10 @@ reid:
   shiro:
     # 是否启用 shiro
     enableShiro: true
-    # 不需要拦截的地址
+    # 不需要拦截的地址（内置有一些插件静态方法不做拦截，如：swagger）
     excludeUrls: /sys/common/login,/sys/common/test
   # mybatis、mybatis-plus 配置
   mybatis:
     mapperScanner:
-      # 需要扫描 mapper 的位置
+      # 需要扫描 mapper 的位置（必须）
       basePackage: org.reid.smart.modules.**.mapper*
