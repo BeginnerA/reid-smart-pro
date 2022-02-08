@@ -63,12 +63,7 @@ public class ShiroConfig {
         CustomShiroFilterFactoryBean shiroFilterFactoryBean = new CustomShiroFilterFactoryBean();
         //设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // 添加自己的过滤器并且取名为 jwt
-        Map<String, Filter> filterMap = MapTools.newHashMap(1);;
-        //如果 cloudServer 为空 则说明是单体 需要加载跨域配置【微服务跨域切换】
-        Object cloudServer = env.getProperty(CommonCharacter.CLOUD_SERVER_KEY);
-        filterMap.put("jwt", new JwtFilter(cloudServer == null));
-        shiroFilterFactoryBean.setFilters(filterMap);
+
         // 拦截器，anon 定义必须在 authc 之前
         // anon：无需认证就可以访问
         // authc：必须认证了才可以访问
@@ -80,7 +75,9 @@ public class ShiroConfig {
         if(StrTools.isNotEmpty(excludeUrls)) {
             String[] permissionUrl = excludeUrls.split(CommonCharacter.COMMA);
             for(String url : permissionUrl) {
-                filterChainDefinitionMap.put(url, "anon");
+                if (StrTools.isNotEmpty(url = url.trim())) {
+                    filterChainDefinitionMap.put(url, "anon");
+                }
             }
         }
 
@@ -92,6 +89,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/v2/**", "anon");
 
+        // 添加自己的过滤器并且取名为 jwt
+        Map<String, Filter> filterMap = MapTools.newHashMap(1);;
+        //如果 cloudServer 为空 则说明是单体 需要加载跨域配置【微服务跨域切换】
+        Object cloudServer = env.getProperty(CommonCharacter.CLOUD_SERVER_KEY);
+        filterMap.put("jwt", new JwtFilter(cloudServer == null));
+        shiroFilterFactoryBean.setFilters(filterMap);
         // 过滤链定义，从上向下顺序执行，一般将/**放在最后
         filterChainDefinitionMap.put("/**", "jwt");
 

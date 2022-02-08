@@ -69,7 +69,7 @@ public class ReidExceptionHandler {
 		sb.append("请求方法，");
 		sb.append("支持以下");
 		String [] methods = e.getSupportedMethods();
-		if(methods!=null){
+		if(methods != null){
 			for(String str:methods){
 				sb.append(str);
 				sb.append("、");
