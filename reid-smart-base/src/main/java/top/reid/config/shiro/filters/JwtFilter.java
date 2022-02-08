@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtFilter extends BasicHttpAuthenticationFilter {
     /**
      * 默认开启跨域设置（使用单体）
-     * 微服务情况下，此属性设置为false
+     * 微服务情况下，此属性设置为 false
      */
     private boolean allowOrigin = true;
 
