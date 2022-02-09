@@ -12,6 +12,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 import top.reid.smart.core.map.MapTools;
+import top.reid.smart.core.util.CommonCharacter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -164,7 +165,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
 
             Map<String, String> resultMap = MapTools.newHashMap(2);
             // 判断是不是 Ajax 请求
-            if ("XMLHttpRequest".equalsIgnoreCase(((HttpServletRequest) request).getHeader("X-Requested-With"))) {
+            if (CommonCharacter.XML_HTTP_REQUEST.equalsIgnoreCase(((HttpServletRequest) request).getHeader(CommonCharacter.X_REQUESTED_WITH))) {
                 resultMap.put("user_status", "300");
                 resultMap.put("message", "您已经在其他地方登录，请重新登录！");
                 // 输出 json 串

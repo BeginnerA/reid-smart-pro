@@ -107,7 +107,7 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
         }
 
         List<String> basePackages = new ArrayList<>();
-        for (String pkg : annoAttrs.getStringArray("value")) {
+        for (String pkg : annoAttrs.getStringArray(CommonCharacter.VALUE_FIELD)) {
             if (StringUtils.hasText(pkg)) {
                 String value = parsePlaceHolder(pkg);
                 if(StringUtils.hasText(value)){
@@ -116,7 +116,7 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
                 }
             }
         }
-        for (String pkg : annoAttrs.getStringArray("basePackages")) {
+        for (String pkg : annoAttrs.getStringArray(CommonCharacter.BASE_PACKAGES_FIELD)) {
             if (StringUtils.hasText(pkg)) {
                 String value = parsePlaceHolder(pkg);
                 if(StringUtils.hasText(value)){
