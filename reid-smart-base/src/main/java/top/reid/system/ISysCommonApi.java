@@ -16,7 +16,7 @@ import java.util.Set;
  * @Data 2022/1/23
  * @Version V1.0
  **/
-public interface SysCommonApi {
+public interface ISysCommonApi {
 
     /**
      * 查询用户角色信息
