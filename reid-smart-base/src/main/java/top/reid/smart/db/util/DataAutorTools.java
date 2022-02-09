@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.toolkit.JdbcUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
-import top.reid.smart.core.util.StrTools;
 import top.reid.smart.spring.SpringContextTools;
 import top.reid.system.vo.SysPermissionDataRuleModel;
 import top.reid.system.vo.SysUserCacheInfo;
@@ -82,7 +81,7 @@ public class DataAutorTools {
      *
      * @return  SQL 字符串
      */
-    public static synchronized String loadDataSearchConditonSQLString() {
+    public static synchronized String loadDataSearchConditonSqlString() {
         return (String) SpringContextTools.getHttpServletRequest().getAttribute(MENU_DATA_AUTHOR_RULE_SQL);
     }
 
@@ -93,7 +92,7 @@ public class DataAutorTools {
      * @param sql sql
      */
     public static synchronized void installDataSearchConditon(HttpServletRequest request, String sql) {
-        String ruleSql = (String)loadDataSearchConditonSQLString();
+        String ruleSql = (String) loadDataSearchConditonSqlString();
         if (!StringUtils.hasText(ruleSql)) {
             request.setAttribute(MENU_DATA_AUTHOR_RULE_SQL,sql);
         }

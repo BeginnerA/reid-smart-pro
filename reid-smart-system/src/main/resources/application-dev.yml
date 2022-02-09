@@ -41,13 +41,13 @@ spring:
           starttls:
             enable: true
             required: true
-  ## quartz定时任务,采用数据库方式
+  # quartz 定时任务，采用数据库方式
   quartz:
     job-store-type: jdbc
     initialize-schema: embedded
-    #定时任务启动开关，true-开  false-关
+    # 定时任务启动开关，true-开  false-关
     auto-startup: true
-    #启动时更新己存在的Job
+    # 启动时更新己存在的 Job
     overwrite-existing-jobs: true
     properties:
       org:
@@ -67,7 +67,7 @@ spring:
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
-  #json 时间戳统一转换
+  # json 时间戳统一转换
   jackson:
     date-format:   yyyy-MM-dd HH:mm:ss
     time-zone:   GMT+8
@@ -75,13 +75,13 @@ spring:
     open-in-view: false
   activiti:
     check-process-definitions: false
-    #启用作业执行器
+    # 启用作业执行器
     async-executor-activate: false
-    #启用异步执行器
+    # 启用异步执行器
     job-executor-activate: false
   aop:
     proxy-target-class: true
-  #配置freemarker
+  # 配置 freemarker
   freemarker:
     # 设置模板后缀名
     suffix: .ftl
@@ -92,10 +92,10 @@ spring:
     # 设置页面缓存
     cache: false
     prefer-file-system-access: false
-    # 设置ftl文件路径
+    # 设置 ftl 文件路径
     template-loader-path:
       - classpath:/templates
-  # 设置静态文件路径，js,css等
+  # 设置静态文件路径，js、css 等
   mvc:
     static-path-pattern: /**
   resource:
@@ -112,7 +112,8 @@ spring:
       web-stat-filter:
         enabled: true
     dynamic:
-      druid: # 全局druid参数，绝大部分值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+      # 全局 druid 参数，绝大部分值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+      druid:
         # 连接池的配置信息
         # 初始化大小，最小，最大
         initial-size: 5
@@ -128,12 +129,12 @@ spring:
         testWhileIdle: true
         testOnBorrow: false
         testOnReturn: false
-        # 打开PSCache，并且指定每个连接上PSCache的大小
+        # 打开 PSCache，并且指定每个连接上 PSCache 的大小
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
-        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        # 配置监控统计拦截的 filters，去掉后监控界面 sql 无法统计，'wall' 用于防火墙
         filters: stat,wall,slf4j
-        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+        # 通过 connectProperties 属性来打开 mergeSql 功能；慢 SQL 记录
         connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
       datasource:
         master:
@@ -147,16 +148,20 @@ spring:
           #username: root
           #password: root
           #driver-class-name: com.mysql.cj.jdbc.Driver
-  #redis 配置
+  # redis 配置
   redis:
     database: 0
     host: 127.0.0.1
     lettuce:
       pool:
-        max-active: 8   #最大连接数据库连接数,设 -1 为没有限制
-        max-idle: 8     #最大等待连接中的数量,设 0 为没有限制
-        max-wait: -1ms  #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
-        min-idle: 0     #最小等待连接中的数量,设 0 为没有限制
+        # 最大连接数据库连接数,设-1为没有限制
+        max-active: 8
+        # 最大等待连接中的数量,设0为没有限制
+        max-idle: 8
+        # 最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+        max-wait: -1ms
+        # 最小等待连接中的数量,设0为没有限制
+        min-idle: 0
       shutdown-timeout: 100ms
     password: ''
     port: 6379
@@ -165,10 +170,10 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:org/reid/smart/modules/**/xml/*Mapper.xml
   global-config:
-    # 关闭MP3.0自带的 banner
+    # 关闭 MP3.0 自带的 banner
     banner: false
     db-config:
-      #主键类型  0:"数据库ID自增",1:"该类型为未设置主键类型", 2:"用户输入ID",3:"全局唯一ID (数字类型唯一ID)", 4:"全局唯一ID UUID",5:"字符串全局唯一ID (idWorker 的字符串表示)";
+      # 主键类型  0:"数据库ID自增",1:"该类型为未设置主键类型", 2:"用户输入ID",3:"全局唯一ID (数字类型唯一ID)", 4:"全局唯一ID UUID",5:"字符串全局唯一ID (idWorker 的字符串表示)";
       id-type: ASSIGN_ID
       # 默认数据库表下划线命名
       table-underline: true

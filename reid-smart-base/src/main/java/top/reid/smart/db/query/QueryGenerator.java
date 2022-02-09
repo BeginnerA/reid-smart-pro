@@ -19,7 +19,6 @@ import top.reid.system.vo.SysPermissionDataRuleModel;
 import top.reid.system.vo.SysUserCacheInfo;
 
 import java.beans.PropertyDescriptor;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
@@ -96,17 +95,26 @@ public class QueryGenerator {
     /**
      * 时间格式化
      */
-    private static final ThreadLocal<SimpleDateFormat> local = new ThreadLocal<SimpleDateFormat>();
+    private static final ThreadLocal<SimpleDateFormat> LOCAL = new ThreadLocal<SimpleDateFormat>();
+
+    /**
+     * 删除此线程局部变量的当前线程值。如果这个线程局部变量随后被当前线程读取，
+     * 它的值将通过调用它的 initialValue 方法重新初始化，除非它的值是由当前线程在中间设置的。
+     * 这可能会导致在当前线程中多次调用 initialValue 方法。
+     */
+    public static void remove() {
+        LOCAL.remove();
+    }
 
     /**
      * 获取简单日期格式（yyyy-MM-dd HH:mm:ss）
      * @return 日期（yyyy-MM-dd HH:mm:ss）
      */
     private static SimpleDateFormat getTime(){
-        SimpleDateFormat time = local.get();
+        SimpleDateFormat time = LOCAL.get();
         if(time == null){
             time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            local.set(time);
+            LOCAL.set(time);
         }
         return time;
     }
@@ -964,10 +972,10 @@ public class QueryGenerator {
         //权限查询
         Map<String,SysPermissionDataRuleModel> ruleMap = getRuleMap();
         PropertyDescriptor[] origDescriptors = PropertyUtils.getPropertyDescriptors(clazz);
-        String sql_and = " and ";
+        String sqlAnd = " and ";
         for (String c : ruleMap.keySet()) {
             if(StrTools.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)){
-                sb.append(sql_and).append(getSqlRuleValue(ruleMap.get(c).getRuleValue()));
+                sb.append(sqlAnd).append(getSqlRuleValue(ruleMap.get(c).getRuleValue()));
             }
         }
         String name, column;
@@ -992,7 +1000,7 @@ public class QueryGenerator {
                     value = NumberUtils.parseNumber(dataRule.getRuleValue(), propType);
                 }
                 String filedSql = getSingleSqlByRule(rule, StrTools.toUnderlineCase(column), value, isString);
-                sb.append(sql_and).append(filedSql);
+                sb.append(sqlAnd).append(filedSql);
             }
         }
         log.info("query auth sql is:"+sb.toString());
@@ -1046,7 +1054,7 @@ public class QueryGenerator {
         StringBuilder sb = new StringBuilder();
         //权限查询
         Map<String,SysPermissionDataRuleModel> ruleMap = getRuleMap();
-        String sql_and = " and ";
+        String sqlAnd = " and ";
         for (String c : ruleMap.keySet()) {
             SysPermissionDataRuleModel dataRule = ruleMap.get(c);
             String ruleValue = dataRule.getRuleValue();
@@ -1054,7 +1062,7 @@ public class QueryGenerator {
                 continue;
             }
             if(StrTools.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)){
-                sb.append(sql_and).append(getSqlRuleValue(ruleValue));
+                sb.append(sqlAnd).append(getSqlRuleValue(ruleValue));
             }else{
                 boolean isString  = false;
                 ruleValue = ruleValue.trim();
@@ -1065,7 +1073,7 @@ public class QueryGenerator {
                 QueryRuleEnum rule = QueryRuleEnum.getByValue(dataRule.getRuleConditions());
                 String value = converRuleValue(ruleValue);
                 String filedSql = getSingleSqlByRule(rule, c, value,isString);
-                sb.append(sql_and).append(filedSql);
+                sb.append(sqlAnd).append(filedSql);
             }
         }
         log.info("query auth sql is = "+sb.toString());
@@ -1148,8 +1156,8 @@ public class QueryGenerator {
      */
     private static String specialStrConvert(String value) {
         if (DbConvertDef.MYSQL.equalsIgnoreCase(getDbType()) || DbConvertDef.MARIADB.equalsIgnoreCase(getDbType())) {
-            String[] special_str = QueryGenerator.LIKE_MYSQL_SPECIAL_STRS.split(",");
-            for (String str : special_str) {
+            String[] specialStr = QueryGenerator.LIKE_MYSQL_SPECIAL_STRS.split(",");
+            for (String str : specialStr) {
                 if (value.contains(str)) {
                     value = value.replace(str, "\\" + str);
                 }
