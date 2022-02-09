@@ -37,7 +37,7 @@ public class LoginUser {
     /**
      * 登录人名字
      */
-    private String realname;
+    private String realName;
 
     /**
      * 登录人密码

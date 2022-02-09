@@ -662,7 +662,7 @@ public class QueryGenerator {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
         String moshi = "";
-        if(key.indexOf("}") != -1){
+        if(key.contains("}")){
             moshi = key.substring(key.indexOf("}")+1);
         }
         String returnValue = null;
@@ -683,7 +683,7 @@ public class QueryGenerator {
         //替换为系统登录用户真实名字
         else if (key.equals(SysBaseConstant.SYS_USER_NAME)|| key.toLowerCase().equals(SysBaseConstant.SYS_USER_NAME_TABLE)) {
             if(user == null) {
-                returnValue = sysUser.getRealname();
+                returnValue = sysUser.getRealName();
             }else {
                 returnValue = user.getSysUserName();
             }

@@ -165,7 +165,7 @@ public class ShiroRealm extends AuthorizingRealm {
     public boolean jwtTokenRefresh(String token, String userName, String passWord) {
         String cacheToken = String.valueOf(redisTools.get(CommonCharacter.PREFIX_USER_TOKEN + token));
         if (StrTools.isNotEmpty(cacheToken)) {
-            // 校验token有效性
+            // 校验 token 有效性
             if (!JwtTools.verify(cacheToken, userName, passWord)) {
                 String newAuthorization = JwtTools.sign(userName, passWord);
                 // 设置超时时间
