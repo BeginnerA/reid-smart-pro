@@ -8,9 +8,13 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import top.reid.config.mybatis.TenantContext;
 import top.reid.smart.core.util.CommonCharacter;
 import top.reid.config.shiro.util.JwtTools;
+import top.reid.smart.core.util.StrTools;
+import top.reid.smart.db.util.RedisTools;
 import top.reid.smart.spring.SpringContextTools;
 import top.reid.smart.spring.annotation.CheckBean;
 import top.reid.system.SysCommonApi;
@@ -38,6 +42,17 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Resource
     SysCommonApi sysCommonApi;
+    @Lazy
+    @Resource
+    private RedisTools redisTools;
+
+    /**
+     * 必须重写此方法，不然 Shiro 会报错
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JwtToken;
+    }
 
     /**
      * 权限信息认证(包括角色以及权限)是用户访问 controller 的时候才进行验证( redis 存储的此处权限信息)
@@ -56,11 +71,11 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        // 设置用户拥有的角色集合
+        // 设置用户拥有的角色集合，如“admin,test”
         Set<String> roleSet = sysCommonApi.queryUserRoles(username);
         info.setRoles(roleSet);
 
-        // 设置用户拥有的权限集合
+        // 设置用户拥有的权限集合，如“sys:role:add,sys:user:add”
         Set<String> permissionSet = sysCommonApi.queryUserAuths(username);
         info.addStringPermissions(permissionSet);
         System.out.println(permissionSet);
@@ -120,7 +135,17 @@ public class ShiroRealm extends AuthorizingRealm {
         if (!jwtTokenRefresh(token, username, loginUser.getPassword())) {
             throw new AuthenticationException(CommonCharacter.TOKEN_IS_INVALID_MSG);
         }
-
+        // 校验租户信息
+        String userTenantIds = loginUser.getRelTenantIds();
+        if(StrTools.isNotEmpty(userTenantIds)){
+            String contextTenantId = TenantContext.getTenant();
+            String def = "0";
+            if(StrTools.isNotEmpty(contextTenantId) && !def.equals(contextTenantId)){
+                if(!String.join(CommonCharacter.COMMA, userTenantIds).contains(contextTenantId)){
+                    throw new AuthenticationException("用户租户信息变更，请重新登陆!");
+                }
+            }
+        }
         return loginUser;
     }
 
@@ -138,18 +163,18 @@ public class ShiroRealm extends AuthorizingRealm {
      * @return 是否成功
      */
     public boolean jwtTokenRefresh(String token, String userName, String passWord) {
-//        String cacheToken = String.valueOf(redisUtil.get(CommonCharacter.PREFIX_USER_TOKEN + token));
-//        if (StrTools.isNotEmpty(cacheToken)) {
-//            // 校验token有效性
-//            if (!JwtUtil.verify(cacheToken, userName, passWord)) {
-//                String newAuthorization = JwtUtil.sign(userName, passWord);
-//                // 设置超时时间
-//                redisUtil.set(CommonCharacter.PREFIX_USER_TOKEN + token, newAuthorization);
-//                redisUtil.expire(CommonCharacter.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME *2 / 1000);
-//                log.debug("—————————— 用户在线操作，更新 token 保证不掉线 ————————— jwtTokenRefresh ——————— "+ token);
-//            }
-//            return true;
-//        }
+        String cacheToken = String.valueOf(redisTools.get(CommonCharacter.PREFIX_USER_TOKEN + token));
+        if (StrTools.isNotEmpty(cacheToken)) {
+            // 校验token有效性
+            if (!JwtTools.verify(cacheToken, userName, passWord)) {
+                String newAuthorization = JwtTools.sign(userName, passWord);
+                // 设置超时时间
+                redisTools.set(CommonCharacter.PREFIX_USER_TOKEN + token, newAuthorization);
+                redisTools.expire(CommonCharacter.PREFIX_USER_TOKEN + token, JwtTools.EXPIRE_TIME * 2 / 1000);
+                log.debug("—————————— 用户在线操作，更新 token 保证不掉线 ————————— jwtTokenRefresh ——————— "+ token);
+            }
+            return true;
+        }
         return false;
     }
 
