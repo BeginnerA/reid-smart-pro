@@ -17,7 +17,7 @@ import top.reid.smart.core.util.StrTools;
 import top.reid.smart.db.util.RedisTools;
 import top.reid.smart.spring.SpringContextTools;
 import top.reid.smart.spring.annotation.CheckBean;
-import top.reid.system.ISysCommonApi;
+import top.reid.system.ISysBaseApi;
 import top.reid.system.vo.LoginUser;
 
 import javax.annotation.Resource;
@@ -34,14 +34,13 @@ import java.util.Set;
  * @Data 2022/1/13
  * @Version V1.0
  **/
-@CheckBean({ISysCommonApi.class})
 @Slf4j
 @Component
 @ConditionalOnProperty(prefix = "reid.shiro", name = "enableShiro", havingValue = "true")
 public class ShiroRealm extends AuthorizingRealm {
-
+    @Lazy
     @Resource
-    ISysCommonApi ISysCommonApi;
+    ISysBaseApi sysBaseApi;
     @Lazy
     @Resource
     private RedisTools redisTools;
@@ -72,11 +71,11 @@ public class ShiroRealm extends AuthorizingRealm {
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 设置用户拥有的角色集合，如“admin,test”
-        Set<String> roleSet = ISysCommonApi.queryUserRoles(username);
+        Set<String> roleSet = sysBaseApi.queryUserRoles(username);
         info.setRoles(roleSet);
 
         // 设置用户拥有的权限集合，如“sys:role:add,sys:user:add”
-        Set<String> permissionSet = ISysCommonApi.queryUserAuths(username);
+        Set<String> permissionSet = sysBaseApi.queryUserAuths(username);
         info.addStringPermissions(permissionSet);
         System.out.println(permissionSet);
         log.info("=============== Shiro 权限认证成功 ==============");
@@ -123,7 +122,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         // 查询用户信息
         log.debug("———————— 校验 token 是否有效 ———————— checkUserTokenIsEffect ———————— "+ token);
-        LoginUser loginUser = ISysCommonApi.getUserByName(username);
+        LoginUser loginUser = sysBaseApi.getUserByName(username);
         if (loginUser == null) {
             throw new AuthenticationException("用户不存在!");
         }

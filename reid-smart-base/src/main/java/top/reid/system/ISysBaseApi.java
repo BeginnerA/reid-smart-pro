@@ -1,5 +1,6 @@
 package top.reid.system;
 
+import top.reid.common.api.ICommonApi;
 import top.reid.system.vo.LoginUser;
 
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
  * @Data 2022/1/23
  * @Version V1.0
  **/
-public interface ISysCommonApi {
+public interface ISysBaseApi extends ICommonApi {
 
     /**
      * 查询用户角色信息
