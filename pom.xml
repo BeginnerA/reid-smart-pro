@@ -30,6 +30,8 @@
         <hutool.version>5.7.19</hutool.version>
         <!-- POI -->
         <poi.version>5.1.0</poi.version>
+        <!-- geoTools -->
+        <geotools.version>20.0</geotools.version>
         <!-- wkt 转 Geo json -->
         <geojson.version>24.2-oss84-1</geojson.version>
         <!-- Swagger -->
@@ -51,6 +53,43 @@
         <mybatis-plus.version>3.5.0</mybatis-plus.version>
         <druid.version>1.2.8</druid.version>
     </properties>
+
+
+    <repositories>
+
+        <!-- GeoServer -->
+        <repository>
+            <id>GeoSolutions</id>
+            <url>http://maven.geo-solutions.it/</url>
+        </repository>
+
+        <!-- GeoTools -->
+        <repository>
+            <id>osgeo</id>
+            <name>OSGeo Release Repository</name>
+            <url>https://repo.osgeo.org/repository/release/</url>
+            <snapshots><enabled>false</enabled></snapshots>
+            <releases><enabled>true</enabled></releases>
+        </repository>
+        <repository>
+            <id>osgeo-snapshot</id>
+            <name>OSGeo Snapshot Repository</name>
+            <url>https://repo.osgeo.org/repository/snapshot/</url>
+            <snapshots><enabled>true</enabled></snapshots>
+            <releases><enabled>false</enabled></releases>
+        </repository>
+
+<!--        &lt;!&ndash; Activiti &ndash;&gt;-->
+<!--        <repository>-->
+<!--            <id>alfresco</id>-->
+<!--            <name>Activiti Releases</name>-->
+<!--            <url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--        </repository>-->
+
+    </repositories>
 
     <dependencies>
 

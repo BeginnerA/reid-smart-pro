@@ -3,7 +3,9 @@ package top.reid.smart.geo;
 import cn.hutool.json.JSONUtil;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 class GeoToolsTest {
 
@@ -101,5 +103,13 @@ class GeoToolsTest {
         for (String s : wktStr) {
             System.out.println("WKT 转 FeatureCollection：" + GeoTools.wktToFeatureCollection(s));
         }
+    }
+
+    @Test
+    void readSHP() throws Exception {
+        Map<String, List> stringListMap = GeoTools.readSHP(new File("E:\\信飞科技\\项目\\矿产资源规划\\530112西山区矿产资源规划数据库\\ArcGIS\\Shape\\D1_530112_E_2020_GJGHKQ.shp"));
+        stringListMap.forEach((k, v) -> {
+            System.out.println(v);
+        });
     }
 }
