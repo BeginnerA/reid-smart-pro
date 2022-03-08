@@ -4,10 +4,12 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * <p>
- *
+ * 空（null）验证器
  * </p>
  *
- * @Author 杨明春
+ * @Author REID
+ * @Blog https://blog.csdn.net/qq_39035773
+ * @GitHub https://github.com/BeginnerA
  * @Data 2022/2/11
  * @Version V1.0
  **/

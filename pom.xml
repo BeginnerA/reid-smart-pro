@@ -31,7 +31,7 @@
         <!-- POI -->
         <poi.version>5.1.0</poi.version>
         <!-- geoTools -->
-        <geotools.version>20.0</geotools.version>
+        <geotools.version>26.2</geotools.version>
         <!-- wkt 转 Geo json -->
         <geojson.version>24.2-oss84-1</geojson.version>
         <!-- Swagger -->

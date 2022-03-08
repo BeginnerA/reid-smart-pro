@@ -19,7 +19,7 @@ import top.reid.smart.spring.annotation.MapperScan;
  * @Version V1.0
  **/
 @Configuration
-@MapperScan("${reid.mybatis.mapperScanner.basePackage}")
+@MapperScan("${reid.mybatis.mapperScan}")
 public class MybatisPlusConfig {
     /**
      * 新的分页插件，一缓和二缓遵循 mybatis 的规则，<br>

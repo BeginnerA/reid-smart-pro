@@ -25,7 +25,8 @@ import java.util.Set;
 
 /**
  * <p>
- * 自定义 Realm 认证逻辑
+ * 自定义 Realm 认证逻辑。<br>
+ * 启用权限认证后 ISysBaseApi 接口需要被继承或实现。
  * </p>
  *
  * @Author REID

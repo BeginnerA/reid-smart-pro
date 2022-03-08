@@ -1,4 +1,4 @@
-package top.reid.config;
+package top.reid.config.swagger;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +17,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import top.reid.config.swagger.SwaggerProperties;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,49 +35,7 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 @EnableKnife4j
-public class Swagger2Config implements WebMvcConfigurer {
-
-    /**
-     * 需要扫描的包
-     */
-    @Value("${reid.swagger.base-package:com}")
-    private String basePackage;
-
-    /**
-     * 企业名称
-     */
-    @Value("${reid.swagger.company-name:}")
-    private String companyName;
-
-    /**
-     * 企业地址
-     */
-    @Value("${reid.swagger.company-url:}")
-    private String companyUrl;
-
-    /**
-     * 企业邮箱
-     */
-    @Value("${reid.swagger.company-email:}")
-    private String companyEmail;
-
-    /**
-     * 项目应用名
-     */
-    @Value("${reid.swagger.name:系统}")
-    private String applicationName;
-
-    /**
-     * 项目版本信息
-     */
-    @Value("${reid.swagger.version:1.0}")
-    private String applicationVersion;
-
-    /**
-     * 项目描述信息
-     */
-    @Value("${reid.swagger.description:后台API接口}")
-    private String applicationDescription;
+public class Swagger2Config extends SwaggerProperties implements WebMvcConfigurer {
 
     /**
      * 显示 swagger-ui.html 文档展示页，还必须注入 swagger 资源：
@@ -98,10 +57,10 @@ public class Swagger2Config implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 // 将api的元信息设置为包含在json ResourceListing响应中。
                 .apiInfo(apiInfo())
-                .groupName(applicationName + applicationVersion + "版本")
+                .groupName(this.getApplicationName() + this.getApplicationVersion() + "版本")
                 .select()
                 // 此包路径下的类，才生成接口文档
-                .apis(RequestHandlerSelectors.basePackage(basePackage))
+                .apis(RequestHandlerSelectors.basePackage(this.getBasePackage()))
                 // 加了 ApiOperation 注解的类，才生成接口文档
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
@@ -147,14 +106,14 @@ public class Swagger2Config implements WebMvcConfigurer {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 // 大标题
-                .title(applicationName + "后台服务API接口文档")
+                .title(this.getApplicationName() + "后台服务API接口文档")
                 // 版本号
-                .version("Application Version: " + applicationVersion + ", Spring Boot Version: " + SpringBootVersion.getVersion())
+                .version("Application Version: " + this.getApplicationVersion() + ", Spring Boot Version: " + SpringBootVersion.getVersion())
 //				.termsOfServiceUrl("NO terms of service")
                 // 描述
-                .description(applicationDescription)
+                .description(this.getApplicationDescription())
                 // 作者
-                .contact(new Contact(companyName, companyUrl, companyEmail))
+                .contact(new Contact(this.getCompanyName(), this.getCompanyUrl(), this.getCompanyEmail()))
                 .license("The Apache License, Version 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .build();
