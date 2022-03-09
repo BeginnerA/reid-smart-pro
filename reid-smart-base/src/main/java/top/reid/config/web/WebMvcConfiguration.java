@@ -1,9 +1,8 @@
-package top.reid.config;
+package top.reid.config.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +14,8 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import top.reid.smart.core.util.CommonCharacter;
+import top.reid.smart.core.util.StrTools;
 
 import java.util.List;
 
@@ -30,29 +31,35 @@ import java.util.List;
  * @Version V1.0
  **/
 @Configuration
-public class WebMvcConfiguration implements WebMvcConfigurer {
-
-    @Value("${reid.path.upload:}")
-    private String upLoadPath;
-    @Value("${reid.path.webapp:}")
-    private String webAppPath;
-    @Value("${spring.resource.static-locations:classpath:/static/,classpath:/public/}")
-    private String staticLocations;
+public class WebMvcConfiguration extends WebProperties implements WebMvcConfigurer {
 
     /**
      * 静态资源的配置 - 使得可以从磁盘中读取 Html、图片、视频、音频等
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("file:" + upLoadPath + "//")
-                .addResourceLocations("file:" + webAppPath + "//")
-                .addResourceLocations(staticLocations.split(","));
+        registry.addResourceHandler("/**");
+        if(StrTools.isNotEmpty(this.getStaticFiles())) {
+            String[] fileUrl = this.getStaticFiles().split(CommonCharacter.COMMA);
+            for(String url : fileUrl) {
+                if (StrTools.isNotEmpty(url = url.trim())) {
+                    registry.addResourceHandler(url+ "//");
+                }
+            }
+        }
+        if(StrTools.isNotEmpty(this.getStaticFiles())) {
+            String[] classpathUrl = this.getStaticClasspath().split(CommonCharacter.COMMA);
+            for(String url : classpathUrl) {
+                if (StrTools.isNotEmpty(url = url.trim())) {
+                    registry.addResourceHandler(url);
+                }
+            }
+        }
     }
 
     /**
-     * 方案一： 默认访问根路径跳转 doc.html 页面 （ swagger 文档页面）
-     * 方案二： 访问根路径改成跳转 index.html 页面 （简化部署方案： 可以把前端打包直接放到项目的 webapp，上面的配置）
+     * 方案一： 默认访问根路径跳转 doc.html 页面 （ swagger 文档页面）<br>
+     * 方案二： 访问根路径改成跳转 index.html 页面 （简化部署方案： 可以把前端打包直接放到项目的 webapp，上面的配置）<br>
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

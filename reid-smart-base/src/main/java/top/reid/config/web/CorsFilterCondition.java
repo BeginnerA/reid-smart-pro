@@ -1,4 +1,4 @@
-package top.reid.config;
+package top.reid.config.web;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
