@@ -86,11 +86,11 @@ public class DbReadTableUtil {
             }
             if (DbConvertDef.isThisType4(DataSourceConfig.diverName)) {
                 String dataSource = DataSourceConfig.dataSource;
-                if (!dataSource.contains(CommonCharacter.COMMA)) {
+                if (!dataSource.contains(String.valueOf(CommonCharacter.COMMA))) {
                     sql = MessageFormat.format(DbConvertDef.TABLE_SQL_4, StrTools.splicingApostrophe(dataSource));
                 }else {
                     StringBuilder param = new StringBuilder();
-                    String[] params = dataSource.split(CommonCharacter.COMMA);
+                    String[] params = dataSource.split(String.valueOf(CommonCharacter.COMMA));
                     int paramsLength = params.length;
                     for (String s : params) {
                         param.append(StrTools.splicingApostrophe(s)).append(CommonCharacter.COMMA);

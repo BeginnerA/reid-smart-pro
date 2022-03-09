@@ -77,7 +77,7 @@ public class ShiroConfig extends ShiroProperties {
         // 所有权限：package org.apache.shiro.web.filter.mgt.DefaultFilter
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         if(StrTools.isNotEmpty(this.getExcludeUrls())) {
-            String[] permissionUrl = this.getExcludeUrls().split(CommonCharacter.COMMA);
+            String[] permissionUrl = this.getExcludeUrls().split(String.valueOf(CommonCharacter.COMMA));
             for(String url : permissionUrl) {
                 if (StrTools.isNotEmpty(url = url.trim())) {
                     filterChainDefinitionMap.put(url, "anon");

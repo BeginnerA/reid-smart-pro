@@ -1,5 +1,7 @@
 package top.reid.smart.core.util;
 
+import cn.hutool.core.text.CharPool;
+
 /**
  * <p>
  * 常用字符
@@ -11,12 +13,7 @@ package top.reid.smart.core.util;
  * @Data 2021/12/31
  * @Version V1.0
  **/
-public interface CommonCharacter {
-
-    /**
-     * 逗号（英文）
-     */
-    String COMMA = ",";
+public interface CommonCharacter extends CharPool {
 
     /**
      * 中文字符集

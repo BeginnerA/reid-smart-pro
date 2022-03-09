@@ -141,7 +141,7 @@ public class ShiroRealm extends AuthorizingRealm {
             String contextTenantId = TenantContext.getTenant();
             String def = "0";
             if(StrTools.isNotEmpty(contextTenantId) && !def.equals(contextTenantId)){
-                if(!String.join(CommonCharacter.COMMA, userTenantIds).contains(contextTenantId)){
+                if(!String.join(String.valueOf(CommonCharacter.COMMA), userTenantIds).contains(contextTenantId)){
                     throw new AuthenticationException("用户租户信息变更，请重新登陆!");
                 }
             }

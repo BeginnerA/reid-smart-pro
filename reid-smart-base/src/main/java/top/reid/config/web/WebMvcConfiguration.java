@@ -39,9 +39,9 @@ public class WebMvcConfiguration extends WebProperties implements WebMvcConfigur
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
-        .addResourceLocations(this.getStaticClasspath().split(CommonCharacter.COMMA));
+        .addResourceLocations(this.getStaticClasspath().split(String.valueOf(CommonCharacter.COMMA)));
         if(StrTools.isNotEmpty(this.getStaticFiles())) {
-            String[] fileUrl = this.getStaticFiles().split(CommonCharacter.COMMA);
+            String[] fileUrl = this.getStaticFiles().split(String.valueOf(CommonCharacter.COMMA));
             for(String url : fileUrl) {
                 if (StrTools.isNotEmpty(url = url.trim())) {
                     registry.addResourceHandler(url+ "//");

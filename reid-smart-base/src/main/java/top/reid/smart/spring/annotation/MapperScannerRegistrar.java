@@ -1,5 +1,6 @@
 package top.reid.smart.spring.annotation;
 
+import cn.hutool.core.text.CharPool;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -19,6 +20,7 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 import top.reid.smart.core.util.CommonCharacter;
+import top.reid.smart.core.util.StrTools;
 
 import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
@@ -111,7 +113,7 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
             if (StringUtils.hasText(pkg)) {
                 String value = parsePlaceHolder(pkg);
                 if(StringUtils.hasText(value)){
-                    String[] valueList = value.split(CommonCharacter.COMMA);
+                    String[] valueList = value.split(String.valueOf(CommonCharacter.COMMA));
                     Collections.addAll(basePackages, valueList);
                 }
             }
@@ -120,7 +122,7 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
             if (StringUtils.hasText(pkg)) {
                 String value = parsePlaceHolder(pkg);
                 if(StringUtils.hasText(value)){
-                    String[] valueList = value.split(CommonCharacter.COMMA);
+                    String[] valueList = value.split(String.valueOf(CommonCharacter.COMMA));
                     Collections.addAll(basePackages, valueList);
                 }
             }
@@ -157,10 +159,15 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
      */
     private String parsePlaceHolder(String pro) {
         if (StringUtils.hasText(pro) && pro.contains(PropertySourcesPlaceholderConfigurer.DEFAULT_PLACEHOLDER_PREFIX)) {
-            String value = environment.getProperty(pro.substring(2, pro.length() - 1));
-
+            String packageStr = pro.substring(2, pro.length() - 1);
+            String value = environment.getProperty(packageStr);
             if (null == value) {
-                throw new IllegalArgumentException("配置属性[" + pro + "]找不到");
+                packageStr = packageStr.substring(0, packageStr.lastIndexOf(CommonCharacter.DOT) + 1) +
+                        StrTools.toSymbolCase(packageStr.substring(packageStr.lastIndexOf(CommonCharacter.DOT) + 1), CommonCharacter.DASHED);
+                value = environment.getProperty(packageStr);
+                if (null == value) {
+                    throw new IllegalArgumentException("配置属性[" + pro + "]找不到");
+                }
             }
             return value;
         }
