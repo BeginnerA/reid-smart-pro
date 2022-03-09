@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import top.reid.config.mybatis.MybatisProperties;
 import top.reid.config.shiro.ShiroProperties;
 import top.reid.config.swagger.SwaggerProperties;
+import top.reid.config.web.WebProperties;
 
 /**
  * <p>
@@ -34,4 +35,8 @@ public class ReidProperties {
      * Swagger 配置项
      */
     SwaggerProperties swagger;
+    /**
+     * web 配置项
+     */
+    WebProperties web;
 }

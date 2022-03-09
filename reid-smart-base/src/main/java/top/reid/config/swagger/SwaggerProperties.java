@@ -20,24 +20,25 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "reid.swagger")
 public class SwaggerProperties {
     /**
-     * 需要扫描的包
+     * 需要扫描的包<br>
+     * 默认：扫描“com”路径下的全部包
      */
     private String basePackage = "com";
 
     /**
-     * 企业名称
+     * 作者名称
      */
-    private String companyName;
+    private String authorName;
 
     /**
-     * 企业地址
+     * 联系地址
      */
-    private String companyUrl;
+    private String contactUrl;
 
     /**
-     * 企业邮箱
+     * 联系邮箱
      */
-    private String companyEmail;
+    private String contactEmail;
 
     /**
      * 项目应用名
@@ -53,4 +54,22 @@ public class SwaggerProperties {
      * 项目描述信息
      */
     private String applicationDescription = "后台API接口";
+
+    /**
+     * 许可证<br>
+     * 默认：The Apache License, Version 2.0
+     */
+    private String license = "The Apache License, Version 2.0";
+
+    /**
+     * 许可证地址<br>
+     * 默认：https://www.apache.org/licenses/LICENSE-2.0.html
+     */
+    private String licenseUrl = "https://www.apache.org/licenses/LICENSE-2.0.html";
+
+    /**
+     * 服务条款网址<br>
+     * 默认：没有服务条款
+     */
+    private String termsOfServiceUrl = "没有服务条款";
 }

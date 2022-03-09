@@ -109,13 +109,13 @@ public class Swagger2Config extends SwaggerProperties implements WebMvcConfigure
                 .title(this.getApplicationName() + "后台服务API接口文档")
                 // 版本号
                 .version("Application Version: " + this.getApplicationVersion() + ", Spring Boot Version: " + SpringBootVersion.getVersion())
-//				.termsOfServiceUrl("NO terms of service")
+				.termsOfServiceUrl(this.getTermsOfServiceUrl())
                 // 描述
                 .description(this.getApplicationDescription())
                 // 作者
-                .contact(new Contact(this.getCompanyName(), this.getCompanyUrl(), this.getCompanyEmail()))
-                .license("The Apache License, Version 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+                .contact(new Contact(this.getAuthorName(), this.getContactUrl(), this.getContactEmail()))
+                .license(this.getLicense())
+                .licenseUrl(this.getLicenseUrl())
                 .build();
     }
 
