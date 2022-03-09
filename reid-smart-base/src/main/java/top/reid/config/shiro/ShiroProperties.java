@@ -20,18 +20,22 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "reid.shiro")
 public class ShiroProperties {
+
     /**
      * 是否启用 Shiro
      */
     private boolean enableShiro;
+
     /**
-     * 无需认证地址
+     * 无需认证地址，支持多个地址
      */
     private String excludeUrls;
+
     /**
      * 应用程序的登录 URL，以方便所有发现的 AccessControlFilter 实例
      */
     private String loginUrl;
+
     /**
      * 应用程序的“未授权” URL，以方便所有已发现的 AuthorizationFilter 实例
      */

@@ -19,11 +19,13 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "reid.web")
 public class WebProperties {
+
     /**
      * file 静态资源路径，支持多个地址<br>
      * 如：file:/tmp1/,file:/tmp2/
      */
     private String staticFiles;
+
     /**
      * classpath 静态资源路径，支持多个地址<br>
      * 默认静态地址：classpath:/static/,classpath:/public/<br>

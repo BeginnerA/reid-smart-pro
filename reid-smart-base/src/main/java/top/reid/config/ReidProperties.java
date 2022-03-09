@@ -23,18 +23,22 @@ import top.reid.config.web.WebProperties;
 @Component
 @ConfigurationProperties(prefix = "reid")
 public class ReidProperties {
+
     /**
      * Mybatis 配置项
      */
     MybatisProperties mybatis;
+
     /**
      * Shiro 配置项
      */
     ShiroProperties shiro;
+
     /**
      * Swagger 配置项
      */
     SwaggerProperties swagger;
+
     /**
      * web 配置项
      */

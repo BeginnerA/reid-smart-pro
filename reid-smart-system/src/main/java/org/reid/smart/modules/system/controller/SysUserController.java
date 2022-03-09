@@ -28,7 +28,7 @@ public class SysUserController {
     ISysUserService userService;
 
     @ApiModelProperty(value = "获取用户列表")
-    @GetMapping("list")
+    @GetMapping("/list")
     public Result<?> querySysUserAll() {
         return Result.ok(userService.querySysUserAll());
     }

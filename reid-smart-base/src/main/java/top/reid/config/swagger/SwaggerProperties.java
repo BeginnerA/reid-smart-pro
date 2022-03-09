@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "reid.swagger")
 public class SwaggerProperties {
+
     /**
      * 需要扫描的包<br>
      * 默认：扫描“com”路径下的全部包
