@@ -24,7 +24,7 @@ reid:
   # shiro 配置
   shiro:
     # 是否启用 shiro
-    enableShiro: true
+    enableShiro: false
     # 不需要拦截的地址（内置有一些插件静态方法不做拦截，如：swagger）
     excludeUrls: /sys/common/login,/sys/common/test
     # 登录地址
