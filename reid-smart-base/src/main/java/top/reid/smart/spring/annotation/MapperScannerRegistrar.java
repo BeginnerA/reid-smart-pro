@@ -166,7 +166,7 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
                         StrTools.toSymbolCase(packageStr.substring(packageStr.lastIndexOf(CommonCharacter.DOT) + 1), CommonCharacter.DASHED);
                 value = environment.getProperty(packageStr);
                 if (null == value) {
-                    throw new IllegalArgumentException("配置属性[" + pro + "]找不到");
+                    log.warn("在包中没有找到 MyBatis 映射器。请检查您的配置[" + pro + "]");
                 }
             }
             return value;

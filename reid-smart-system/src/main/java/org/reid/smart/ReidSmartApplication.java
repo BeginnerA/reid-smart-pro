@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
+import top.reid.smart.spring.annotation.MapperScan;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -21,6 +22,7 @@ import java.util.Objects;
  * @Data 2021/11/19
  * @Version V1.0
  **/
+@MapperScan("${reid.mybatis.mapperScan}")
 @Slf4j
 @SpringBootApplication
 public class ReidSmartApplication {

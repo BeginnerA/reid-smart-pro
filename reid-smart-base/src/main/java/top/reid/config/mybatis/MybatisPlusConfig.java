@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import top.reid.smart.spring.annotation.MapperScan;
 
 /**
  * <p>
@@ -19,7 +18,6 @@ import top.reid.smart.spring.annotation.MapperScan;
  * @Version V1.0
  **/
 @Configuration
-@MapperScan("${reid.mybatis.mapperScan}")
 public class MybatisPlusConfig {
     /**
      * 新的分页插件，一缓和二缓遵循 mybatis 的规则，<br>
