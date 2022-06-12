@@ -90,6 +90,9 @@ public class Swagger2Config extends SwaggerProperties implements WebMvcConfigure
         );
     }
 
+    /**
+     * 默认身份验证
+     */
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];

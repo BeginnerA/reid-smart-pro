@@ -7,7 +7,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import top.reid.config.mybatis.TenantContext;
@@ -16,7 +15,7 @@ import top.reid.config.shiro.util.JwtTools;
 import top.reid.smart.core.util.StrTools;
 import top.reid.smart.db.util.RedisTools;
 import top.reid.smart.spring.SpringContextTools;
-import top.reid.smart.spring.annotation.CheckBean;
+import top.reid.smart.spring.annotation.ConditionalOnProperty;
 import top.reid.system.ISysBaseApi;
 import top.reid.system.vo.LoginUser;
 

@@ -15,8 +15,6 @@ import org.crazycake.shiro.RedisClusterManager;
 import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -28,6 +26,7 @@ import top.reid.config.shiro.filters.JwtFilter;
 import top.reid.smart.core.map.MapTools;
 import top.reid.smart.core.util.CommonCharacter;
 import top.reid.smart.core.util.StrTools;
+import top.reid.smart.spring.annotation.ConditionalOnProperty;
 
 import javax.annotation.Resource;
 import javax.servlet.Filter;

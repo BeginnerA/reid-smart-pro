@@ -64,7 +64,7 @@ public class SwaggerProperties {
 
     /**
      * 许可证地址<br>
-     * 默认：https://www.apache.org/licenses/LICENSE-2.0.html
+     * 默认：<a href="https://www.apache.org/licenses/LICENSE-2.0.html">许可证地址</a>
      */
     private String licenseUrl = "https://www.apache.org/licenses/LICENSE-2.0.html";
 
