@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.3</version>
+        <version>2.7.0</version>
         <relativePath/>
     </parent>
 
@@ -24,34 +24,34 @@
 
     <properties>
         <reid-smart.version>0.0.1-SNAPSHOT</reid-smart.version>
-        <java.version>17</java.version>
+        <java.version>18</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 工具类库 -->
-        <hutool.version>5.7.19</hutool.version>
+        <hutool.version>5.8.3</hutool.version>
         <!-- POI -->
-        <poi.version>5.1.0</poi.version>
+        <poi.version>5.2.2</poi.version>
         <!-- geoTools -->
-        <geotools.version>26.2</geotools.version>
+        <geotools.version>27.0</geotools.version>
         <!-- wkt 转 Geo json -->
         <geojson.version>24.2-oss84-1</geojson.version>
         <!-- Swagger -->
         <knife4j.version>3.0.3</knife4j.version>
         <!-- JWT -->
-        <java-jwt.version>3.18.3</java-jwt.version>
+        <java-jwt.version>3.19.2</java-jwt.version>
         <!-- shiro -->
-        <shiro.version>1.8.0</shiro.version>
+        <shiro.version>1.9.0</shiro.version>
         <!-- shiro-redis -->
         <shiro-redis.version>3.3.1</shiro-redis.version>
         <!-- 数据库驱动 -->
-        <postgresql.version>42.3.1</postgresql.version>
+        <postgresql.version>42.4.0</postgresql.version>
         <ojdbc6.version>11.2.0.3</ojdbc6.version>
         <sqljdbc4.version>4.0</sqljdbc4.version>
-        <mysql-connector-java.version>8.0.27</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
         <UCanAccess.version>5.0.1</UCanAccess.version>
         <!-- 动态数据源 -->
-        <dynamic-datasource-spring-boot-starter.version>3.5.0</dynamic-datasource-spring-boot-starter.version>
-        <mybatis-plus.version>3.5.0</mybatis-plus.version>
-        <druid.version>1.2.8</druid.version>
+        <dynamic-datasource-spring-boot-starter.version>3.5.1</dynamic-datasource-spring-boot-starter.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <druid.version>1.2.9</druid.version>
     </properties>
 
 
@@ -78,16 +78,6 @@
             <snapshots><enabled>true</enabled></snapshots>
             <releases><enabled>false</enabled></releases>
         </repository>
-
-<!--        &lt;!&ndash; Activiti &ndash;&gt;-->
-<!--        <repository>-->
-<!--            <id>alfresco</id>-->
-<!--            <name>Activiti Releases</name>-->
-<!--            <url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases/</url>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--            </releases>-->
-<!--        </repository>-->
 
     </repositories>
 

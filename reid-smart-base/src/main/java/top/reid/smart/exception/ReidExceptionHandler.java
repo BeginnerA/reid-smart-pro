@@ -19,8 +19,8 @@ import top.reid.common.api.vo.Result;
  * </p>
  *
  * @Author REID
- * @Blog https://blog.csdn.net/qq_39035773
- * @GitHub https://github.com/BeginnerA
+ * @Blog <a href="https://blog.csdn.net/qq_39035773">Blog</a>
+ * @GitHub <a href="https://github.com/BeginnerA">GitHub</a>
  * @Data 2021/11/19
  * @Version V1.0
  **/

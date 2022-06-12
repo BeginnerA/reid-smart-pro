@@ -41,14 +41,16 @@ import java.util.regex.Pattern;
  * </p>
  *
  * @Author REID
- * @Blog https://blog.csdn.net/qq_39035773
- * @GitHub https://github.com/BeginnerA
+ * @Blog <a href="https://blog.csdn.net/qq_39035773">Blog</a>
+ * @GitHub <a href="https://github.com/BeginnerA">GitHub</a>
  * @Data 2020/11/11
  * @Version V1.0
  **/
 public class GeoTools {
 
     private static final WKTReader READER = new WKTReader();
+
+    static final Pattern PATTERN = Pattern.compile("[^0-9]");
 
     /**
      * 要素集合根节点
@@ -294,14 +296,14 @@ public class GeoTools {
 
     /**
      * 读取 Shapefiles 文件表内容和对应表数据
-     * @param SHPFile Shapefiles 文件
+     * @param shapeFile Shapefiles 文件
      * @return Map<（entity/datas）, List（对应map数据）>
      */
-    public static Map<String, List> readSHP(File SHPFile) throws Exception {
+    public static Map<String, Object> readShp(File shapeFile) throws Exception {
 
-        // 一个数据存储实现，允许从Shapefiles读取和写入
+        // 一个数据存储实现，允许从 Shapefiles 读取和写入
         ShapefileDataStore shpDataStore = null;
-        shpDataStore = new ShapefileDataStore(SHPFile.toURI().toURL());
+        shpDataStore = new ShapefileDataStore(shapeFile.toURI().toURL());
         shpDataStore.setCharset(StandardCharsets.UTF_8);
 
         // 获取这个数据存储保存的类型名称数组
@@ -319,9 +321,10 @@ public class GeoTools {
 
         // 迭代
         int stop = 0;
-        Map<String, List> map = new HashMap<>();
-        List<Map> entity = new ArrayList<>();
-        List<Map> datas = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>(16);
+        List<Map<String, String>> entity = new ArrayList<>();
+        List<Map<String, String>> datas = new ArrayList<>();
+
         while (iterator.hasNext()) {
             SimpleFeature feature = iterator.next();
             Collection<Property> p = feature.getProperties();
@@ -330,20 +333,19 @@ public class GeoTools {
 
             // 特征里面的属性再迭代,属性里面有字段
             String name;
-            Map<String, Object> data = new HashMap<>();
+            Map<String, String> data = new HashMap<>(16);
             while (it.hasNext()) {
                 Property pro = it.next();
                 name = pro.getName().toString();
                 if(stop == 0){
-                    Map<String, Object> et = new HashMap<>();
+                    Map<String, String> et = new HashMap<>(16);
                     PropertyType propertyType = pro.getType();
                     Class<?> cls = propertyType.getBinding();
                     String className = cls.getName();
                     String tName = className.substring(className.lastIndexOf(".")+1);
                     Filter filter = propertyType.getRestrictions().isEmpty() ? null : (Filter) propertyType.getRestrictions().get(0);
                     String typeLength = filter != null ? filter.toString() : "0";
-                    Pattern pattern = Pattern.compile("[^0-9]");
-                    Matcher matcher = pattern.matcher(typeLength);
+                    Matcher matcher = PATTERN.matcher(typeLength);
                     String tLength = matcher.replaceAll("").trim();
                     et.put("name", name);
                     et.put("type", tName);
