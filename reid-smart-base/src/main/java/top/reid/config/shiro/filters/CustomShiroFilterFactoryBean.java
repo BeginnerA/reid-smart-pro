@@ -33,7 +33,7 @@ public class CustomShiroFilterFactoryBean extends ShiroFilterFactoryBean {
     }
 
     @Override
-    protected AbstractShiroFilter createInstance() throws Exception {
+    protected AbstractShiroFilter createInstance() {
 
         SecurityManager securityManager = getSecurityManager();
         if (securityManager == null) {

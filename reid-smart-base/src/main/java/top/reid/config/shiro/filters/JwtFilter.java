@@ -41,10 +41,13 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      * 执行登录认证
      * 该方法返回值表示是否跳过认证，这里如果返回 true，则不会再走一遍认证流程，<br>
      * 如果返回 false，则会执行 isAccessAllowed 方法，再执行 isLoginAttempt 方法，<br>
-     * 如果为 false 继续执行 executeLogin 方法，如果没有执行 executeLogin 或者执行结果也是 false，则将执行 sendChallenge 方法，表示认证失败。<br>
-     * 返回 true 时，则必须在 postHandle 配置退出登录，这个方法将在执行完业务逻辑后执行，否则将导致下次没有携带 token 时直接使用上次的登录结果，从而非法访问接口。<br>
+     * 如果为 false 继续执行 executeLogin 方法，如果没有执行 executeLogin 或者执行结果也是 false，
+     * sendChallenge 方法，表示认证失败。<br>
+     * 返回 true 时，则必须在 postHandle 配置退出登录，这个方法将在执行完业务逻辑后执行，
+     * 否则将导致下次没有携带 token 时直接使用上次的登录结果，从而非法访问接口。<br>
      *
-     * 默认返回 false 时，isLoginAttempt这些方法将重复调用，所以不建议。如果要返回 false，建议复写 sendChallenge 方法，因为其响应内容为空。<br>
+     * 默认返回 false 时，isLoginAttempt 这些方法将重复调用，所以不建议。如果要返回 false，
+     * 建议复写 sendChallenge 方法，因为其响应内容为空。<br>
      *
      * 也可以将 isAccessAllowed 作为纯判断是否需要认证，或者不复写该方法。<br>
      * @param request 服务请求

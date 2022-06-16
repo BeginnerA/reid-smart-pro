@@ -2,7 +2,7 @@ package top.reid.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import top.reid.config.mybatis.MybatisProperties;
 import top.reid.config.shiro.ShiroProperties;
 import top.reid.config.swagger.SwaggerProperties;
@@ -20,8 +20,8 @@ import top.reid.config.web.WebProperties;
  * @Version V1.0
  **/
 @Data
-@Component
-@ConfigurationProperties(prefix = "reid")
+@Configuration
+//@ConfigurationProperties(prefix = "reid")
 public class ReidProperties {
 
     /**

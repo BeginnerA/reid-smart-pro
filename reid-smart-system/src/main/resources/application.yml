@@ -19,20 +19,22 @@ reid:
     # 以下非必须配置
     author-name: 一个无聊的程序猿
     contact-url: company-url
-    contact-email: <a href="https://github.com/BeginnerA">GitHub</a>
+    contact-email: 1184010001@qq.com
     application-name: 一个无聊的项目
     application-version: @project.version@
     application-description: 一个无聊的项目后台API接口
   # shiro 配置
   shiro:
     # 是否启用 shiro
-    enable-shiro: false
+    enable-shiro: true
     # 不需要拦截的地址（内置有一些插件静态方法不做拦截，如：swagger）
-    exclude-urls: /sys/common/login,/sys/common/test
+    exclude-urls: /sys/login,/sys/common/test
     # 登录地址
     login-url: /sys/common/login
     # 未授权地址
     unauthorized-url: /sys/common/403
+    # 会话踢出后到的地址
+    kickout-url: /auth/kickout
   # mybatis、mybatis-plus 配置
   mybatis:
     # 需要扫描 mapper 的位置（必须）

@@ -2,7 +2,6 @@ package top.reid.config.swagger;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
  * @Version V1.0
  **/
 @Data
-@Component
 @ConfigurationProperties(prefix = "reid.swagger")
 public class SwaggerProperties {
 

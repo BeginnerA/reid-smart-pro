@@ -55,8 +55,8 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 权限信息认证(包括角色以及权限)是用户访问 controller 的时候才进行验证( redis 存储的此处权限信息)
-     * 触发检测用户权限时才会调用此方法，例如 checkRole,checkPermission
-     *
+     * 触发检测用户权限时才会调用此方法.<br>
+     * 例如 checkRole,checkPermission
      * @param principalCollection 身份信息
      * @return AuthorizationInfo 权限信息
      */
@@ -98,7 +98,7 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException(CommonCharacter.TOKEN_IS_INVALID_MSG);
         }
         // 校验 token 有效性
-        LoginUser loginUser = null;
+        LoginUser loginUser;
         try {
             loginUser = this.checkUserTokenIsEffect((String) token);
         } catch (AuthenticationException e) {
