@@ -26,7 +26,7 @@ reid:
   # shiro 配置
   shiro:
     # 是否启用 shiro
-    enable-shiro: true
+    enable-shiro: false
     # 不需要拦截的地址（内置有一些插件静态方法不做拦截，如：swagger）
     exclude-urls: /sys/login,/sys/common/test
     # 登录地址
@@ -39,3 +39,5 @@ reid:
   mybatis:
     # 需要扫描 mapper 的位置（必须）
     mapper-scan: org.reid.smart.modules.**.mapper*
+  mqtt:
+    host: ws://81.68.151.90:8083/mqtt # ws://broker-cn.emqx.io:8083/mqtt,ws://broker.emqx.io:8083/mqtt

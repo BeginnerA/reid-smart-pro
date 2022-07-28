@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.reid.smart.base</groupId>
+    <groupId>top.reid.smart.base</groupId>
     <artifactId>reid-smart-base</artifactId>
 
     <parent>
@@ -11,6 +11,40 @@
         <groupId>org.reid.smart</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+    <properties>
+        <java.version>18</java.version>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 工具类库 -->
+        <hutool.version>5.8.4</hutool.version>
+        <!-- POI -->
+        <poi.version>5.2.2</poi.version>
+        <!-- geoTools -->
+        <geotools.version>27.0</geotools.version>
+        <!-- wkt 转 Geo json -->
+        <geojson.version>24.2-oss84-1</geojson.version>
+        <!-- Swagger -->
+        <knife4j.version>3.0.3</knife4j.version>
+        <!-- JWT -->
+        <java-jwt.version>4.0.0</java-jwt.version>
+        <!-- shiro -->
+        <shiro.version>1.9.1</shiro.version>
+        <!-- shiro-redis -->
+        <shiro-redis.version>3.3.1</shiro-redis.version>
+        <!-- 数据库驱动 -->
+        <postgresql.version>42.4.0</postgresql.version>
+        <ojdbc6.version>11.2.0.3</ojdbc6.version>
+        <sqljdbc4.version>4.0</sqljdbc4.version>
+        <mysql-connector-java.version>8.0.30</mysql-connector-java.version>
+        <UCanAccess.version>5.0.1</UCanAccess.version>
+        <!-- 动态数据源 -->
+        <dynamic-datasource-spring-boot-starter.version>3.5.1</dynamic-datasource-spring-boot-starter.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <druid.version>1.2.11</druid.version>
+    </properties>
 
     <dependencies>
         <!-- 集成 springmvc 框架并实现自动配置 -->
@@ -22,6 +56,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!-- 自动生成的 Getters，setter，equals，Hashcode 和 Tostring 等等 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
         <!-- 自定义配置文件提示 -->
         <dependency>
