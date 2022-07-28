@@ -22,7 +22,7 @@ public class MessagePersistenceConfig {
     /**
      * 是否开启默认消息持久
      */
-    private boolean msgPersistence;
+    private boolean msgPersistence = false;
     /**
      * 持久化表名称前缀。此配置只作用于自动生成表名
      */

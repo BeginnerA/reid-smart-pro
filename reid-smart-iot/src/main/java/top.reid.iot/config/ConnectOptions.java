@@ -36,7 +36,7 @@ public class ConnectOptions {
     /**
      * 客户端可以连接的 MQTT 服务器，用英文逗号间隔
      */
-    private String serverURIs;
+    private String serverUrls;
     /**
      * 链接用户名
      **/
@@ -70,9 +70,14 @@ public class ConnectOptions {
      * 重连接间隔毫秒数，默认为128000ms
      */
     private int maxReconnectDelay = 128000;
-
+    /**
+     * 链接安全 SSL 设置
+     */
     private SSL ssl;
-
+    /**
+     * 设置连接的“最后遗嘱和遗嘱”（LWT）。<br>
+     * 如果此客户端意外失去与服务器的连接，服务器将使用提供的详细信息向自己发布消息。
+     */
     private Will will;
 
 
@@ -122,7 +127,7 @@ public class ConnectOptions {
     @ConfigurationProperties(prefix = "reid.mqtt.options.will")
     protected class Will {
         /***
-         * 设置“遗嘱”消息的话题，若客户端与服务器之间的连接意外中断，服务器将发布客户端的“遗嘱”消息。
+         * 设置“遗嘱”消息的话题主题，若客户端与服务器之间的连接意外中断，服务器将发布客户端的“遗嘱”消息。
          */
         private String topic = "";
 
@@ -147,8 +152,8 @@ public class ConnectOptions {
      */
     public MqttConnectOptions getConnectOptions(){
         MqttConnectOptions options = new MqttConnectOptions();
-        if (StrUtil.isNotEmpty(serverURIs)) {
-            options.setServerURIs(serverURIs.split(","));
+        if (StrUtil.isNotEmpty(serverUrls)) {
+            options.setServerURIs(serverUrls.split(","));
         }
         if (StrUtil.isNotEmpty(this.username)) {
             options.setUserName(this.username);

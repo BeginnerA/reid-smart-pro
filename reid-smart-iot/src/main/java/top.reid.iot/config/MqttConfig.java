@@ -24,6 +24,11 @@ import java.util.stream.Collectors;
 @Configuration
 @ConfigurationProperties(prefix = "reid.mqtt")
 public class MqttConfig {
+    /**
+     * 客户端自定义 ID<br>
+     * 如果没有配置，默认 MQTT 客户端 ID 为 ip:port
+     */
+    private String clientId;
     /***
      * MQTT 服务地址
      **/

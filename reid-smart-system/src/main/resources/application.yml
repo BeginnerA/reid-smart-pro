@@ -40,4 +40,5 @@ reid:
     # 需要扫描 mapper 的位置（必须）
     mapper-scan: org.reid.smart.modules.**.mapper*
   mqtt:
+    clientId: 客户端ID
     host: ws://81.68.151.90:8083/mqtt # ws://broker-cn.emqx.io:8083/mqtt,ws://broker.emqx.io:8083/mqtt

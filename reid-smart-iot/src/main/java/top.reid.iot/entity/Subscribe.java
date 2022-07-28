@@ -35,7 +35,8 @@ public class Subscribe {
      */
     private String tableName;
     /**
-     * 消息监听器中收到的上下文对象
+     * 消息监听器中收到的上下文对象。<br>
+     * 用于将上下文传递给回调的可选对象。如果不需要，可以为 null
      */
     private Object userContext;
     /**
