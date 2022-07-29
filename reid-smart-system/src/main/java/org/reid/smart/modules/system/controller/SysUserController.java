@@ -6,7 +6,7 @@ import org.reid.smart.modules.system.service.ISysUserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.reid.common.api.vo.Result;
+import top.reid.smart.common.api.vo.Result;
 
 import javax.annotation.Resource;
 

@@ -6,7 +6,7 @@ import org.reid.smart.modules.system.entity.SysUser;
 import org.reid.smart.modules.system.service.ISysUserService;
 import org.reid.smart.modules.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
-import top.reid.system.vo.LoginUser;
+import top.reid.smart.system.vo.LoginUser;
 
 import java.util.List;
 import java.util.Set;

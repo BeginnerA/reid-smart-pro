@@ -7,12 +7,12 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.reid.common.api.vo.Result;
-import top.reid.iot.entity.Publish;
-import top.reid.iot.entity.Subscribe;
-import top.reid.iot.service.mqtt.PublisherService;
-import top.reid.iot.service.mqtt.SubscribeService;
-import top.reid.iot.service.mqtt.UnsubscribeService;
+import top.reid.smart.common.api.vo.Result;
+import top.reid.smart.iot.mqttv3.pojo.Publish;
+import top.reid.smart.iot.mqttv3.pojo.Subscribe;
+import top.reid.smart.iot.service.mqtt.PublisherService;
+import top.reid.smart.iot.service.mqtt.SubscribeService;
+import top.reid.smart.iot.service.mqtt.UnsubscribeService;
 
 import javax.annotation.Resource;
 
@@ -47,6 +47,7 @@ public class IotController {
     public Result<?> subscribeToInform(String topic) {
         Subscribe subscribe = new Subscribe();
         subscribe.setTopic(topic);
+        subscribe.setMyMessageListener(new MyAbstractMessageListener());
         return Result.ok(subscribeService.subscribe(subscribe));
     }
 
@@ -60,6 +61,7 @@ public class IotController {
         Publish publish = new Publish();
         publish.setTopic(topic);
         publish.setMessage(message);
+        publish.setCallbackAsync(new MyAbstractPublishListener());
         return Result.ok(publisherService.publish(publish));
     }
 

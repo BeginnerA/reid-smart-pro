@@ -40,6 +40,6 @@ reid:
     # 需要扫描 mapper 的位置（必须）
     mapper-scan: org.reid.smart.modules.**.mapper*
   mqtt:
-    host: ws://81.68.151.90:8083/mqtt # ws://broker-cn.emqx.io:8083/mqtt,ws://broker.emqx.io:8083/mqtt,ws://81.68.151.90:8083/mqtt
+    host: ws://81.68.151.90:8088/mqtt # ws://broker-cn.emqx.io:8083/mqtt,ws://broker.emqx.io:8083/mqtt,ws://81.68.151.90:8083/mqtt
     options:
-      server-urls: ws://broker-cn.emqx.io:8083/mqtt,ws://broker.emqx.io:8083/mqtt
+      server-urls: ws://broker.emqx.io:8083/mqtt,ws://broker-cn.emqx.io:8083/mqtt

@@ -2,18 +2,15 @@ package org.reid.smart.modules.system.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.reid.common.api.vo.Result;
-import top.reid.config.shiro.util.JwtTools;
-import top.reid.smart.core.util.CommonCharacter;
-import top.reid.smart.db.util.RedisTools;
-import top.reid.system.vo.SysLoginModel;
+import top.reid.smart.common.api.vo.Result;
+import top.reid.smart.config.shiro.util.JwtTools;
+import top.reid.smart.base.core.util.CommonCharacter;
+import top.reid.smart.base.db.util.RedisTools;
+import top.reid.smart.system.vo.SysLoginModel;
 
 import javax.annotation.Resource;
 
